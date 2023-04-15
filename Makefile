@@ -12,12 +12,14 @@
 
 
 SRCS		=	./src/main.c \
-
+				./src/display.c \
+				./src/signal.c
 
 OBJS		=	$(SRCS:.c=.o)
 
 NAME		=	minishell
-CC			=	cc
+CC			=	gcc
+# -g -fsanitize=address
 FLAGS		=	-Wall -Werror -Wextra
 INCLUDE		=	./include/minishell.h
 RM			= 	rm -f
@@ -30,7 +32,8 @@ PURPLE=\033[0;35m
 all			:	$(NAME)
 
 ${NAME} : ${OBJS}
-	@$(CC) $(OBJS) $(FLAGS) -o $(NAME)
+	@make -C libft
+	@$(CC) $(OBJS) $(FLAGS) ./libft/libft.a -o $(NAME)
 	@echo "⭐️ ${YELLOW}$(NAME) created ⭐️${NC}"
 
 
@@ -40,6 +43,8 @@ ${NAME} : ${OBJS}
 
 clean		:
 		$(RM) ./src/*.o
+		$(RM) ./bonus/*.o
+		make fclean -C ./libft
 		@echo "👾 ${PURPLE}only object files deleted  👾${NC}"
 
 fclean		:	clean

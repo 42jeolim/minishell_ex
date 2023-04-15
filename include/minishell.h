@@ -13,6 +13,36 @@
 #ifndef MINISHELL_H
 # define MINISHELL_H
 
+# include <stdio.h>
+# include <stdlib.h>
+# include <string.h>
+# include <errno.h>
+# include <unistd.h>
+# include <fcntl.h>
+# include <sys/types.h>
+# include <sys/stat.h>
+# include <signal.h>
+# include <readline/readline.h>
+# include <readline/history.h>
+# include "../libft/libft.h"
+
+# ifndef BUFFER_SIZE
+#  define BUFFER_SIZE 1024
+# endif
+
+# define STDIN  0
+# define STDOUT 1
+# define STDERR 2
+
+
+
+// display
+void print_minishell(void);
+void	print_prompt();
+// static void	print_prompt(char **envp);
+
+// signal
+void set_signal(void);
 
 
 #endif

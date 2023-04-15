@@ -1,0 +1,11 @@
+{
+  "files.associations": {
+    "string.h": "c",
+    "libft.h": "c",
+    "unistd.h": "c",
+    "fcntl.h": "c",
+    "minishell.h": "c",
+    "readline.h": "c",
+    "signal.h": "c"
+  }
+}
