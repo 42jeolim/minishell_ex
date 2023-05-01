@@ -1,30 +1,24 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        ::::::::            */
-/*   main.c                                             :+:    :+:            */
+/*   ft_putunsignedint_fd.c                             :+:    :+:            */
 /*                                                     +:+                    */
 /*   By: mgraaf <mgraaf@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
-/*   Created: 2022/02/14 12:04:02 by mgraaf        #+#    #+#                 */
-/*   Updated: 2022/10/03 16:38:34 by maiadegraaf   ########   odam.nl         */
+/*   Created: 2021/12/16 14:18:16 by mgraaf        #+#    #+#                 */
+/*   Updated: 2021/12/16 14:18:20 by mgraaf        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "../libft.h"
 
-int	main(int argc, char **argv, char **envp)
+void	ft_putunsignedint_fd(unsigned int n, int fd)
 {
-	t_tools	tools;
-
-	if (argc != 1 || argv[1])
+	if (n < 10)
+		ft_putchar_fd(n + '0', fd);
+	if (n >= 10)
 	{
-		printf("This program does not accept arguments\n");
-		exit(0);
+		ft_putnbr_fd(n / 10, fd);
+		ft_putchar_fd((n % 10) + '0', fd);
 	}
-	tools.envp = ft_arrdup(envp);
-	find_pwd(&tools);
-	implement_tools(&tools);
-	printf("\n%s\n\n", WELCOME_MSG); 
-	minishell_loop(&tools);
-	return (0);
 }

@@ -1,30 +1,31 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        ::::::::            */
-/*   main.c                                             :+:    :+:            */
+/*   ft_putstr_size.c                                   :+:    :+:            */
 /*                                                     +:+                    */
 /*   By: mgraaf <mgraaf@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
-/*   Created: 2022/02/14 12:04:02 by mgraaf        #+#    #+#                 */
-/*   Updated: 2022/10/03 16:38:34 by maiadegraaf   ########   odam.nl         */
+/*   Created: 2021/12/16 14:18:10 by mgraaf        #+#    #+#                 */
+/*   Updated: 2021/12/16 14:18:13 by mgraaf        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "../libft.h"
 
-int	main(int argc, char **argv, char **envp)
+int	ft_putstr_size(char *s, int fd)
 {
-	t_tools	tools;
+	int	i;
 
-	if (argc != 1 || argv[1])
+	if (!s)
 	{
-		printf("This program does not accept arguments\n");
-		exit(0);
+		ft_putstr_fd("(null)", fd);
+		return (6);
 	}
-	tools.envp = ft_arrdup(envp);
-	find_pwd(&tools);
-	implement_tools(&tools);
-	printf("\n%s\n\n", WELCOME_MSG); 
-	minishell_loop(&tools);
-	return (0);
+	i = 0;
+	while (s[i])
+	{
+		ft_putchar_fd(s[i], fd);
+		i++;
+	}
+	return (i);
 }

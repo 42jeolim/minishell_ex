@@ -1,30 +1,36 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        ::::::::            */
-/*   main.c                                             :+:    :+:            */
+/*   ft_strlcat.c                                       :+:    :+:            */
 /*                                                     +:+                    */
 /*   By: mgraaf <mgraaf@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
-/*   Created: 2022/02/14 12:04:02 by mgraaf        #+#    #+#                 */
-/*   Updated: 2022/10/03 16:38:34 by maiadegraaf   ########   odam.nl         */
+/*   Created: 2021/12/16 14:24:16 by mgraaf        #+#    #+#                 */
+/*   Updated: 2021/12/16 14:24:18 by mgraaf        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "libft.h"
 
-int	main(int argc, char **argv, char **envp)
+size_t	ft_strlcat(char *dst, const char *src, size_t dstsize)
 {
-	t_tools	tools;
+	size_t	i;
+	size_t	j;
+	size_t	len_dst;
 
-	if (argc != 1 || argv[1])
+	i = 0;
+	j = 0;
+	len_dst = ft_strlen(dst);
+	i = len_dst;
+	if (len_dst > dstsize)
+		return (dstsize + ft_strlen(src));
+	while (src[j] && i < (dstsize - 1) && dstsize > 0)
 	{
-		printf("This program does not accept arguments\n");
-		exit(0);
+		dst[i] = src[j];
+		i++;
+		j++;
 	}
-	tools.envp = ft_arrdup(envp);
-	find_pwd(&tools);
-	implement_tools(&tools);
-	printf("\n%s\n\n", WELCOME_MSG); 
-	minishell_loop(&tools);
-	return (0);
+	if (dstsize > 0)
+		dst[i] = '\0';
+	return (len_dst + ft_strlen(src));
 }

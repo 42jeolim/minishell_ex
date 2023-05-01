@@ -1,30 +1,41 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        ::::::::            */
-/*   main.c                                             :+:    :+:            */
+/*   ft_convert_hex.c                                   :+:    :+:            */
 /*                                                     +:+                    */
 /*   By: mgraaf <mgraaf@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
-/*   Created: 2022/02/14 12:04:02 by mgraaf        #+#    #+#                 */
-/*   Updated: 2022/10/03 16:38:34 by maiadegraaf   ########   odam.nl         */
+/*   Created: 2021/12/16 14:17:31 by mgraaf        #+#    #+#                 */
+/*   Updated: 2021/12/16 14:17:33 by mgraaf        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "../libft.h"
 
-int	main(int argc, char **argv, char **envp)
+void	ft_print_hex(unsigned long n, char *up_or_low)
 {
-	t_tools	tools;
-
-	if (argc != 1 || argv[1])
+	if (n != 0)
 	{
-		printf("This program does not accept arguments\n");
-		exit(0);
+		ft_print_hex(n / 16, up_or_low);
+		ft_putchar_fd(up_or_low[n % 16], 1);
 	}
-	tools.envp = ft_arrdup(envp);
-	find_pwd(&tools);
-	implement_tools(&tools);
-	printf("\n%s\n\n", WELCOME_MSG); 
-	minishell_loop(&tools);
-	return (0);
+}
+
+int	ft_convert_hex(unsigned long n, char *up_or_low)
+{
+	int	i;
+
+	i = 0;
+	if (n == 0)
+	{
+		ft_putchar_fd(up_or_low[n], 1);
+		return (1);
+	}
+	ft_print_hex(n, up_or_low);
+	while (n != 0)
+	{
+		n /= 16;
+		i++;
+	}
+	return (i);
 }

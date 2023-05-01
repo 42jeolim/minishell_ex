@@ -1,30 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        ::::::::            */
-/*   main.c                                             :+:    :+:            */
+/*   ft_if_char.c                                       :+:    :+:            */
 /*                                                     +:+                    */
 /*   By: mgraaf <mgraaf@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
-/*   Created: 2022/02/14 12:04:02 by mgraaf        #+#    #+#                 */
-/*   Updated: 2022/10/03 16:38:34 by maiadegraaf   ########   odam.nl         */
+/*   Created: 2021/12/16 14:17:46 by mgraaf        #+#    #+#                 */
+/*   Updated: 2021/12/16 14:17:49 by mgraaf        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "../libft.h"
 
-int	main(int argc, char **argv, char **envp)
+int	ft_if_char(char c, va_list ap)
 {
-	t_tools	tools;
-
-	if (argc != 1 || argv[1])
+	if (c == 'c')
 	{
-		printf("This program does not accept arguments\n");
-		exit(0);
+		ft_putchar_fd(va_arg(ap, int), 1);
+		return (1);
 	}
-	tools.envp = ft_arrdup(envp);
-	find_pwd(&tools);
-	implement_tools(&tools);
-	printf("\n%s\n\n", WELCOME_MSG); 
-	minishell_loop(&tools);
+	if (c == 's')
+		return (ft_putstr_size(va_arg(ap, char *), 1));
 	return (0);
 }

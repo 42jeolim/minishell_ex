@@ -1,30 +1,32 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        ::::::::            */
-/*   main.c                                             :+:    :+:            */
+/*   ft_if_hex.c                                        :+:    :+:            */
 /*                                                     +:+                    */
 /*   By: mgraaf <mgraaf@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
-/*   Created: 2022/02/14 12:04:02 by mgraaf        #+#    #+#                 */
-/*   Updated: 2022/10/03 16:38:34 by maiadegraaf   ########   odam.nl         */
+/*   Created: 2021/12/16 14:17:54 by mgraaf        #+#    #+#                 */
+/*   Updated: 2021/12/16 14:17:56 by mgraaf        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "../libft.h"
 
-int	main(int argc, char **argv, char **envp)
+int	ft_if_hex(char c, va_list ap)
 {
-	t_tools	tools;
+	char	*up;
+	char	*low;
 
-	if (argc != 1 || argv[1])
+	up = "0123456789ABCDEF";
+	low = "0123456789abcdef";
+	if (c == 'x')
+		return (ft_convert_hex(va_arg(ap, unsigned int), low));
+	if (c == 'X')
+		return (ft_convert_hex(va_arg(ap, unsigned int), up));
+	if (c == 'p')
 	{
-		printf("This program does not accept arguments\n");
-		exit(0);
+		ft_putstr_fd("0x", 1);
+		return (2 + ft_convert_hex(va_arg(ap, unsigned long), low));
 	}
-	tools.envp = ft_arrdup(envp);
-	find_pwd(&tools);
-	implement_tools(&tools);
-	printf("\n%s\n\n", WELCOME_MSG); 
-	minishell_loop(&tools);
 	return (0);
 }

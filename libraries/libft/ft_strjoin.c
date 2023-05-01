@@ -1,30 +1,42 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        ::::::::            */
-/*   main.c                                             :+:    :+:            */
+/*   ft_strjoin.c                                       :+:    :+:            */
 /*                                                     +:+                    */
 /*   By: mgraaf <mgraaf@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
-/*   Created: 2022/02/14 12:04:02 by mgraaf        #+#    #+#                 */
-/*   Updated: 2022/10/03 16:38:34 by maiadegraaf   ########   odam.nl         */
+/*   Created: 2021/12/16 14:24:11 by mgraaf        #+#    #+#                 */
+/*   Updated: 2021/12/16 14:24:13 by mgraaf        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "libft.h"
 
-int	main(int argc, char **argv, char **envp)
+char	*ft_strjoin(char const *s1, char const *s2)
 {
-	t_tools	tools;
+	int		len;
+	char	*s1_2;
+	int		i;
 
-	if (argc != 1 || argv[1])
+	if ((!s1 || !s2) || (!s1 && !s2))
+		return (0);
+	len = ft_strlen(s1) + ft_strlen(s2);
+	s1_2 = (char *)malloc(len * sizeof(char) + 1);
+	i = 0;
+	if (!s1_2)
+		return (0);
+	while (*s1)
 	{
-		printf("This program does not accept arguments\n");
-		exit(0);
+		s1_2[i] = *s1;
+		s1++;
+		i++;
 	}
-	tools.envp = ft_arrdup(envp);
-	find_pwd(&tools);
-	implement_tools(&tools);
-	printf("\n%s\n\n", WELCOME_MSG); 
-	minishell_loop(&tools);
-	return (0);
+	while (*s2)
+	{
+		s1_2[i] = *s2;
+		s2++;
+		i++;
+	}
+	s1_2[i] = '\0';
+	return (s1_2);
 }

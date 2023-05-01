@@ -1,58 +1,137 @@
-# **************************************************************************** #
-#                                                                              #
-#                                                         :::      ::::::::    #
-#    Makefile                                           :+:      :+:    :+:    #
-#                                                     +:+ +:+         +:+      #
-#    By: jeolim <jeolim@student.42.fr>              +#+  +:+       +#+         #
-#                                                 +#+#+#+#+#+   +#+            #
-#    Created: 2023/03/21 21:14:34 by jeolim            #+#    #+#              #
-#    Updated: 2023/03/21 21:23:29 by jeolim           ###   ########.fr        #
-#                                                                              #
-# **************************************************************************** #
+NAME = minishell
+MKDIR = mkdir
 
+CC = gcc
 
-SRCS		=	./src/main.c \
-				./src/display.c \
-				./src/signal.c
+LIBFTP = libraries/libft
+PATHB = build/
+PATHO = build/objs/
+PATHS = src/
+PATHSL = src/lexer/
+PATHSP = src/parser/
+PATHSB = src/builtins/
+PATHSEX = src/expander/
+PATHSU = src/utils/
+PATHSE = src/error/
+PATHP = src/pipex/
+PATHEX = src/executor/
 
-OBJS		=	$(SRCS:.c=.o)
+BUILD_PATHS = $(PATHB) $(PATHO)
 
-NAME		=	minishell
-CC			=	gcc
-# -g -fsanitize=address
-FLAGS		=	-Wall -Werror -Wextra
-INCLUDE		=	./include/minishell.h
-RM			= 	rm -f
+src	=	src/main.c \
+		src/signals.c \
+		src/lexer/handle_quotes.c \
+		src/lexer/handle_token.c \
+		src/lexer/token_reader.c \
+		src/parser/handle_redirections.c \
+		src/parser/parser.c \
+		src/parser/parser_utils.c \
+		src/builtins/builtins.c \
+		src/builtins/mini_cd.c \
+		src/builtins/mini_echo.c \
+		src/builtins/mini_env.c \
+		src/builtins/mini_exit.c \
+		src/builtins/mini_export.c \
+		src/builtins/mini_pwd.c \
+		src/builtins/mini_unset.c \
+		src/builtins/utils_builtins.c \
+		src/utils/minishell_loop.c \
+		src/utils/parse_envp.c \
+		src/utils/t_lexer_clear_utils.c \
+		src/utils/t_lexer_utils.c \
+		src/utils/t_simple_cmds_utils.c \
+		src/utils/utils.c \
+		src/error/error_handling.c \
+		src/error/ft_error.c \
+		src/executor/check_redirections.c \
+		src/executor/executor.c \
+		src/executor/handle_cmd.c \
+		src/executor/heredoc.c \
+		src/executor/executor_utils.c \
+		src/expander/expander.c \
+		src/expander/expanders_utils.c \
+		src/expander/expanders_utils2.c
 
-YELLOW=\033[1;33m
-NC=\033[0m
-GREEN=\033[0;32m
-PURPLE=\033[0;35m
+OBJS	=	$(addprefix $(PATHO), $(notdir $(patsubst %.c, %.o, $(src))))
 
-all			:	$(NAME)
+FLAGS	=	-Wall -Werror -Wextra -g #-fsanitize=address
 
-${NAME} : ${OBJS}
-	@make -C libft
-	@$(CC) $(OBJS) $(FLAGS) ./libft/libft.a -o $(NAME)
-	@echo "⭐️ ${YELLOW}$(NAME) created ⭐️${NC}"
+LIBFT	=	./libraries/libft/libft.a
 
+HEADER	=	.includes/builtins.h \
+			.includes/color.h \
+			.includes/error.h \
+			.includes/executor.h \
+			.includes/lexer.h \
+			.includes/minishell.h \
+			.includes/parser.h \
+			.includes/utils.h 
 
-%.o:%.c ${INCLUDES}
-	@${CC} ${FLAGS} -o $@ -c $<
-	@echo "${GREEN}$@ created ✅${NC}"
+READLINE_DIR = $(shell brew --prefix readline)
 
-clean		:
-		$(RM) ./src/*.o
-		$(RM) ./bonus/*.o
-		make fclean -C ./libft
-		@echo "👾 ${PURPLE}only object files deleted  👾${NC}"
+READLINE_LIB = -lreadline -lhistory -L $(READLINE_DIR)/lib
+	
+INCLUDES =-Iincludes -I$(PATHP) -I$(LIBFTP) -I$(READLINE_DIR)/include 
 
-fclean		:	clean
-		$(RM) $(NAME)
-		@echo "👾 ${PURPLE} all files deleted  👾${NC}"
+all: $(BUILD_PATHS) $(NAME)
 
-re	:
-	make fclean 
-	make all
+$(PATHO)%.o:: $(PATHS)%.c
+	@echo "Compiling ${notdir $<}			in	$(PATHS)"
+	@$(CC) -c $(FLAGS) $(INCLUDES) $< -o $@
 
-.PHONY	:	all clean fclean re
+$(PATHO)%.o:: $(PATHSL)%.c $(HEADERS)
+	@echo "Compiling ${notdir $<}			in	$(PATHSL)"
+	@$(CC) -c $(FLAGS) $(INCLUDES) $< -o $@
+
+$(PATHO)%.o:: $(PATHSP)%.c $(HEADERS)
+	@echo "Compiling ${notdir $<}			in	$(PATHSP)"
+	@$(CC) -c $(FLAGS) $(INCLUDES) $< -o $@
+
+$(PATHO)%.o:: $(PATHSB)%.c $(HEADERS)
+	@echo "Compiling ${notdir $<}			in	$(PATHSB)"
+	@$(CC) -c $(FLAGS) $(INCLUDES) $< -o $@
+
+$(PATHO)%.o:: $(PATHSEX)%.c $(HEADERS)
+	@echo "Compiling ${notdir $<}			in	$(PATHSEX)"
+	@$(CC) -c $(FLAGS) $(INCLUDES) $< -o $@
+
+$(PATHO)%.o:: $(PATHSU)%.c $(HEADERS)
+	@echo "Compiling ${notdir $<}			in	$(PATHSU)"
+	@$(CC) -c $(FLAGS) $(INCLUDES) $< -o $@
+
+$(PATHO)%.o:: $(PATHSE)%.c $(HEADERS)
+	@echo "Compiling ${notdir $<}			in	$(PATHSE)"
+	@$(CC) -c $(FLAGS) $(INCLUDES) $< -o $@
+
+$(PATHO)%.o:: $(PATHEX)%.c $(dHEADERS)
+	@echo "Compiling ${notdir $<}			in	$(PATHEX)"
+	@$(CC) -c $(FLAGS) $(INCLUDES) $< -o $@
+
+$(NAME): $(LIBFT) $(OBJS) $(HEADERS)
+	@$(CC) $(FLAGS) $(LIBFT) $(OBJS) $(READLINE_LIB) -o $(NAME)
+
+	@echo "Success"
+
+$(LIBFT):
+	@$(MAKE) -C ./libraries/libft
+
+$(PATHB):
+	@$(MKDIR) $(PATHB)
+
+$(PATHO):
+	@$(MKDIR) $(PATHO)
+
+clean:
+	@echo "Cleaning"
+	@rm -f $(OBJS)
+	@rm -f $(PATHB).tmp*
+	@rmdir $(PATHO) $(PATHB)
+	@make fclean -C libraries/libft
+
+fclean: clean
+	@rm -f $(NAME)
+	@rm -f $(LIBFT)
+
+re: fclean all
+
+.PRECIOUS: $(PATHO)%.o

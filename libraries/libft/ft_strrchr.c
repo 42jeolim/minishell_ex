@@ -1,30 +1,38 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        ::::::::            */
-/*   main.c                                             :+:    :+:            */
+/*   ft_strrchr.c                                       :+:    :+:            */
 /*                                                     +:+                    */
 /*   By: mgraaf <mgraaf@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
-/*   Created: 2022/02/14 12:04:02 by mgraaf        #+#    #+#                 */
-/*   Updated: 2022/10/03 16:38:34 by maiadegraaf   ########   odam.nl         */
+/*   Created: 2021/12/16 14:24:59 by mgraaf        #+#    #+#                 */
+/*   Updated: 2021/12/16 14:25:00 by mgraaf        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "libft.h"
 
-int	main(int argc, char **argv, char **envp)
+char	*ft_strrchr(const char *s, int c)
 {
-	t_tools	tools;
+	int		i;
 
-	if (argc != 1 || argv[1])
+	i = ft_strlen(s) - 1;
+	while (i >= 0)
 	{
-		printf("This program does not accept arguments\n");
-		exit(0);
+		if (s[i] == (unsigned char)c)
+		{
+			while (i > 0)
+			{
+				s++;
+				i--;
+			}
+			return ((char *)s);
+		}
+		i--;
 	}
-	tools.envp = ft_arrdup(envp);
-	find_pwd(&tools);
-	implement_tools(&tools);
-	printf("\n%s\n\n", WELCOME_MSG); 
-	minishell_loop(&tools);
+	while (*s)
+		s++;
+	if (*s == (unsigned char)c)
+		return ((char *)s);
 	return (0);
 }

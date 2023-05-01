@@ -1,30 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        ::::::::            */
-/*   main.c                                             :+:    :+:            */
+/*   ft_determine_type.c                                :+:    :+:            */
 /*                                                     +:+                    */
 /*   By: mgraaf <mgraaf@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
-/*   Created: 2022/02/14 12:04:02 by mgraaf        #+#    #+#                 */
-/*   Updated: 2022/10/03 16:38:34 by maiadegraaf   ########   odam.nl         */
+/*   Created: 2021/12/16 14:17:36 by mgraaf        #+#    #+#                 */
+/*   Updated: 2021/12/16 14:17:39 by mgraaf        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "../libft.h"
 
-int	main(int argc, char **argv, char **envp)
+int	ft_determine_type(char c, va_list ap)
 {
-	t_tools	tools;
-
-	if (argc != 1 || argv[1])
+	if (c == '%')
 	{
-		printf("This program does not accept arguments\n");
-		exit(0);
+		ft_putchar_fd('%', 1);
+		return (1);
 	}
-	tools.envp = ft_arrdup(envp);
-	find_pwd(&tools);
-	implement_tools(&tools);
-	printf("\n%s\n\n", WELCOME_MSG); 
-	minishell_loop(&tools);
+	if (c == 'c' || c == 's')
+		return (ft_if_char(c, ap));
+	if (c == 'd' || c == 'i' || c == 'u')
+		return (ft_if_num(c, ap));
+	if (c == 'x' || c == 'X' || c == 'p')
+		return (ft_if_hex(c, ap));
 	return (0);
 }

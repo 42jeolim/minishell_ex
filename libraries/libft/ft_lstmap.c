@@ -1,30 +1,36 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        ::::::::            */
-/*   main.c                                             :+:    :+:            */
+/*   ft_lstmap.c                                        :+:    :+:            */
 /*                                                     +:+                    */
 /*   By: mgraaf <mgraaf@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
-/*   Created: 2022/02/14 12:04:02 by mgraaf        #+#    #+#                 */
-/*   Updated: 2022/10/03 16:38:34 by maiadegraaf   ########   odam.nl         */
+/*   Created: 2021/12/16 14:22:33 by mgraaf        #+#    #+#                 */
+/*   Updated: 2021/12/16 14:22:35 by mgraaf        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "libft.h"
 
-int	main(int argc, char **argv, char **envp)
+t_list	*ft_lstmap(t_list *lst, void *(*f)(void *), void (*del)(void *))
 {
-	t_tools	tools;
+	t_list	*new_list;
+	t_list	*head;
 
-	if (argc != 1 || argv[1])
+	head = NULL;
+	if (!lst || !f)
+		return (head);
+	while (lst)
 	{
-		printf("This program does not accept arguments\n");
-		exit(0);
+		new_list = ft_lstnew(f(lst->content));
+		if (new_list)
+			ft_lstadd_back(&head, new_list);
+		else
+		{
+			ft_lstclear(&head, del);
+			return (NULL);
+		}
+		lst = lst->next;
 	}
-	tools.envp = ft_arrdup(envp);
-	find_pwd(&tools);
-	implement_tools(&tools);
-	printf("\n%s\n\n", WELCOME_MSG); 
-	minishell_loop(&tools);
-	return (0);
+	return (head);
 }

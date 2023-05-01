@@ -1,30 +1,33 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        ::::::::            */
-/*   main.c                                             :+:    :+:            */
+/*   ft_strdup.c                                        :+:    :+:            */
 /*                                                     +:+                    */
 /*   By: mgraaf <mgraaf@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
-/*   Created: 2022/02/14 12:04:02 by mgraaf        #+#    #+#                 */
-/*   Updated: 2022/10/03 16:38:34 by maiadegraaf   ########   odam.nl         */
+/*   Created: 2021/12/16 14:24:00 by mgraaf        #+#    #+#                 */
+/*   Updated: 2021/12/16 14:24:02 by mgraaf        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "libft.h"
 
-int	main(int argc, char **argv, char **envp)
+char	*ft_strdup(const char *s1)
 {
-	t_tools	tools;
+	char	*s2;
+	size_t	size;
+	size_t	i;
 
-	if (argc != 1 || argv[1])
+	i = 0;
+	size = ft_strlen(s1);
+	s2 = (char *)malloc((size * sizeof(char)) + 1);
+	if (!s2)
+		return (0);
+	while (i < size)
 	{
-		printf("This program does not accept arguments\n");
-		exit(0);
+		s2[i] = s1[i];
+		i++;
 	}
-	tools.envp = ft_arrdup(envp);
-	find_pwd(&tools);
-	implement_tools(&tools);
-	printf("\n%s\n\n", WELCOME_MSG); 
-	minishell_loop(&tools);
-	return (0);
+	s2[i] = '\0';
+	return (s2);
 }

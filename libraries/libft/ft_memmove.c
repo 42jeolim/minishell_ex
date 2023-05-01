@@ -1,30 +1,40 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        ::::::::            */
-/*   main.c                                             :+:    :+:            */
+/*   ft_memmove.c                                       :+:    :+:            */
 /*                                                     +:+                    */
 /*   By: mgraaf <mgraaf@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
-/*   Created: 2022/02/14 12:04:02 by mgraaf        #+#    #+#                 */
-/*   Updated: 2022/10/03 16:38:34 by maiadegraaf   ########   odam.nl         */
+/*   Created: 2021/12/16 14:23:07 by mgraaf        #+#    #+#                 */
+/*   Updated: 2021/12/16 14:23:08 by mgraaf        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "libft.h"
 
-int	main(int argc, char **argv, char **envp)
+void	*ft_memmove(void *dst, const void *src, size_t n)
 {
-	t_tools	tools;
+	size_t	i;
 
-	if (argc != 1 || argv[1])
+	i = 0;
+	if (src == 0 && dst == 0)
+		return (0);
+	if (dst < src)
 	{
-		printf("This program does not accept arguments\n");
-		exit(0);
+		while (n)
+		{
+			((char *)dst)[i] = ((char *)src)[i];
+			i++;
+			n--;
+		}
 	}
-	tools.envp = ft_arrdup(envp);
-	find_pwd(&tools);
-	implement_tools(&tools);
-	printf("\n%s\n\n", WELCOME_MSG); 
-	minishell_loop(&tools);
-	return (0);
+	else
+	{
+		while (n)
+		{
+			((char *)dst)[n - 1] = ((char *)src)[n - 1];
+			n--;
+		}
+	}
+	return (dst);
 }
