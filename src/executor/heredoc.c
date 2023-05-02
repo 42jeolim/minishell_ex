@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
-/*                                                        ::::::::            */
-/*   heredoc.c                                          :+:    :+:            */
-/*                                                     +:+                    */
-/*   By: maiadegraaf <maiadegraaf@student.codam.      +#+                     */
-/*                                                   +#+                      */
-/*   Created: 2022/04/11 17:42:39 by maiadegraaf   #+#    #+#                 */
-/*   Updated: 2022/10/03 17:56:15 by maiadegraaf   ########   odam.nl         */
+/*                                                        :::      ::::::::   */
+/*   heredoc.c                                          :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: jeolim <jeolim@student.42.fr>              +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/04/11 17:42:39 by maiadegraaf       #+#    #+#             */
+/*   Updated: 2023/05/02 19:47:42 by jeolim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,9 +20,12 @@ int	create_heredoc(t_lexer *heredoc, bool quotes,
 
 	fd = open(file_name, O_CREAT | O_RDWR | O_TRUNC, 0644);
 	line = readline(HEREDOC_MSG);
-	while (line && ft_strncmp(heredoc->str, line, ft_strlen(heredoc->str))
-		&& !g_global.stop_heredoc)
+	
+	while (line && !g_global.stop_heredoc && ft_strncmp(heredoc->str, line, ft_strlen(heredoc->str) + 1))
 	{
+		// if (line && !g_global.stop_heredoc && ft_strncmp(heredoc->str, line, ft_strlen(heredoc->str) + 1))
+		// 	break;
+		printf("%s", heredoc->str);
 		if (quotes == false)
 			line = expander_str(tools, line);
 		write(fd, line, ft_strlen(line));
@@ -54,9 +57,11 @@ int	ft_heredoc(t_tools *tools, t_lexer *heredoc, char *file_name)
 	delete_quotes(heredoc->str, '\'');
 	g_global.stop_heredoc = 0;
 	g_global.in_heredoc = 1;
+	printf(">> %s", heredoc->str);
 	sl = create_heredoc(heredoc, quotes, tools, file_name);
 	g_global.in_heredoc = 0;
 	tools->heredoc = true;
+	printf("** %s", heredoc->str);
 	return (sl);
 }
 
@@ -87,6 +92,7 @@ int	send_heredoc(t_tools *tools, t_simple_cmds *cmd)
 				free(cmd->hd_file_name);
 			cmd->hd_file_name = generate_heredoc_filename();
 			sl = ft_heredoc(tools, cmd->redirections, cmd->hd_file_name);
+			printf("check >> : %s\n", cmd->str[0]);
 			if (sl)
 			{
 				g_global.error_num = 1;
@@ -96,5 +102,6 @@ int	send_heredoc(t_tools *tools, t_simple_cmds *cmd)
 		cmd->redirections = cmd->redirections->next;
 	}
 	cmd->redirections = start;
+	printf("check : %c\n", cmd->str[0][0]);
 	return (EXIT_SUCCESS);
 }

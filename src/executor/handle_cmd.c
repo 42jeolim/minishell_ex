@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
-/*                                                        ::::::::            */
-/*   handle_cmd.c                                       :+:    :+:            */
-/*                                                     +:+                    */
-/*   By: maiadegraaf <maiadegraaf@student.codam.      +#+                     */
-/*                                                   +#+                      */
-/*   Created: 2022/04/11 17:24:04 by maiadegraaf   #+#    #+#                 */
-/*   Updated: 2022/04/20 14:48:37 by fpolycar      ########   odam.nl         */
+/*                                                        :::      ::::::::   */
+/*   handle_cmd.c                                       :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: jeolim <jeolim@student.42.fr>              +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/04/11 17:24:04 by maiadegraaf       #+#    #+#             */
+/*   Updated: 2023/05/02 18:15:23 by jeolim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,7 @@ void	handle_cmd(t_simple_cmds *cmd, t_tools *tools)
 	if (cmd->redirections)
 		if (check_redirections(cmd))
 			exit(1);
+	printf("%c", cmd->str[0][0]);
 	if (cmd->builtin != NULL)
 	{
 		exit_code = cmd->builtin(tools, cmd);

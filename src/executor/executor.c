@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
-/*                                                        ::::::::            */
-/*   executor.c                                         :+:    :+:            */
-/*                                                     +:+                    */
-/*   By: mgraaf <mgraaf@student.codam.nl>             +#+                     */
-/*                                                   +#+                      */
-/*   Created: 2022/02/24 15:09:50 by mgraaf        #+#    #+#                 */
-/*   Updated: 2022/10/03 17:56:15 by maiadegraaf   ########   odam.nl         */
+/*                                                        :::      ::::::::   */
+/*   executor.c                                         :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: jeolim <jeolim@student.42.fr>              +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/02/24 15:09:50 by mgraaf            #+#    #+#             */
+/*   Updated: 2023/05/02 18:16:07 by jeolim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,6 +95,7 @@ int	executor(t_tools *tools)
 		if (tools->simple_cmds->prev)
 			close(fd_in);
 		fd_in = check_fd_heredoc(tools, end, tools->simple_cmds);
+		printf("fd_in: %d\n", fd_in);
 		if (tools->simple_cmds->next)
 			tools->simple_cmds = tools->simple_cmds->next;
 		else
