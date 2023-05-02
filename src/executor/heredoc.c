@@ -1,6 +1,6 @@
 #include "../../includes/executor.h"
 
-int	create_heredoc(t_lexer *heredoc, bool quotes,
+int	create_heredoc(t_lexer *heredoc, int quotes,
 	t_data *data, char *file_name)
 {
 	int		fd;
@@ -11,7 +11,7 @@ int	create_heredoc(t_lexer *heredoc, bool quotes,
 	
 	while (line && !g_mini.stop_heredoc && ft_strncmp(heredoc->str, line, ft_strlen(heredoc->str) + 1))
 	{
-		if (quotes == false)
+		if (quotes == False)
 			line = expander_str(data, line);
 		write(fd, line, ft_strlen(line));
 		write(fd, "\n", 1);
@@ -27,24 +27,24 @@ int	create_heredoc(t_lexer *heredoc, bool quotes,
 
 int	ft_heredoc(t_data *data, t_lexer *heredoc, char *file_name)
 {
-	bool	quotes;
-	int		sl;
+	int	quotes;
+	int	sl;
 
 	sl = 0;
 	if ((heredoc->str[0] == '\"'
 			&& heredoc->str[ft_strlen(heredoc->str) - 1] == '\"')
 		|| (heredoc->str[0] == '\''
 			&& heredoc->str[ft_strlen(heredoc->str) - 1] == '\''))
-		quotes = true;
+		quotes = True;
 	else
-		quotes = false;
+		quotes = False;
 	delete_quotes(heredoc->str, '\"');
 	delete_quotes(heredoc->str, '\'');
 	g_mini.stop_heredoc = 0;
 	g_mini.in_heredoc = 1;
 	sl = create_heredoc(heredoc, quotes, data, file_name);
 	g_mini.in_heredoc = 0;
-	data->heredoc = true;
+	data->heredoc = True;
 	return (sl);
 }
 

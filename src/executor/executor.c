@@ -38,10 +38,10 @@ int	ft_fork(t_data *data, int end[2], int fd_in, t_cmds *cmd)
 {
 	static int	i = 0;
 
-	if (data->reset == true)
+	if (data->reset == True)
 	{
 		i = 0;
-		data->reset = false;
+		data->reset = False;
 	}
 	data->pid[i] = fork();
 	if (data->pid[i] < 0)
@@ -83,7 +83,6 @@ int	executor(t_data *data)
 		if (data->cmd->prev)
 			close(fd_in);
 		fd_in = check_fd_heredoc(data, end, data->cmd);
-		printf("fd_in: %d\n", fd_in);
 		if (data->cmd->next)
 			data->cmd = data->cmd->next;
 		else

@@ -1,7 +1,7 @@
 #ifndef BUILTINS_H
 # define BUILTINS_H
 
-# include <dirent.h>
+// # include <dirent.h>
 # include "minishell.h"
 
 //builtins
