@@ -1,15 +1,3 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        ::::::::            */
-/*   parser.h                                           :+:    :+:            */
-/*                                                     +:+                    */
-/*   By: mgraaf <mgraaf@student.codam.nl>             +#+                     */
-/*                                                   +#+                      */
-/*   Created: 2022/02/17 17:59:38 by mgraaf        #+#    #+#                 */
-/*   Updated: 2022/10/03 17:56:15 by maiadegraaf   ########   odam.nl         */
-/*                                                                            */
-/* ************************************************************************** */
-
 #ifndef PARSER_H
 # define PARSER_H
 # include "minishell.h"
@@ -18,9 +6,9 @@ typedef enum s_tokens
 {
 	PIPE = 1,
 	GREAT,
-	GREAT_GREAT,
+	DGREAT,
 	LESS,
-	LESS_LESS,
+	DLESS,
 }	t_tokens;
 
 typedef struct s_lexer
@@ -32,53 +20,55 @@ typedef struct s_lexer
 	struct s_lexer	*prev;
 }	t_lexer;
 
-typedef struct s_parser_tools
-{
-	t_lexer			*lexer_list;
-	t_lexer			*redirections;
-	int				num_redirections;
-	struct s_tools	*tools;
-}	t_parser_tools;
-
-typedef struct s_tools
+typedef struct s_data
 {
 	char					*args;
 	char					**paths;
-	char					**envp;
-	struct s_simple_cmds	*simple_cmds;
+	char					**env;
+	struct s_cmds			*cmd;
 	t_lexer					*lexer_list;
 	char					*pwd;
 	char					*old_pwd;
 	int						pipes;
 	int						*pid;
-	bool					heredoc;
-	bool					reset;
-}	t_tools;
+	int						heredoc;
+	int						reset;
+}	t_data;
 
-typedef struct s_simple_cmds
+typedef struct s_cmds
 {
 	char					**str;
-	int						(*builtin)(t_tools *, struct s_simple_cmds *);
-	int						num_redirections;
-	char					*hd_file_name;
-	t_lexer					*redirections;
-	struct s_simple_cmds	*next;
-	struct s_simple_cmds	*prev;
-}	t_simple_cmds;
+	int						(*builtin)(t_data *, struct s_cmds *);
+	int						num_redi;
+	char					*file_name;
+	t_lexer					*redi;
+	struct s_cmds			*next;
+	struct s_cmds			*prev;
+}	t_cmds;
 
-int				parse_envp(t_tools *tools);
-int				find_pwd(t_tools *tools);
-int				parser(t_tools *tools);
+typedef struct s_parser
+{
+	t_lexer			*lexer_list;
+	t_lexer			*redi;
+	int				num_redi;
+	struct s_data	*data;
+}	t_parser;
+
+// parser
+int			parser(t_data *data);
 
 //parser_utils
-t_parser_tools	init_parser_tools(t_lexer *lexer_list, t_tools *tools);
-void			count_pipes(t_lexer *lexer_list, t_tools *tools);
-int				count_args(t_lexer *lexer_list);
-t_lexer			*find_next_cmd(t_lexer *lexer_lst);
+void		count_pipes(t_lexer *lex, t_data *data);
+t_parser	init_parser_data(t_lexer *lex, t_data *data);
+int			count_args(t_lexer *lex);
+
+t_lexer			*find_next_cmd(t_lexer *lex);
 
 //handle_redirections
-int				add_new_redirection(t_lexer *tmp, t_parser_tools *parser_tools);
-int				handle_heredoc(t_parser_tools *parser_tools, t_lexer *tmp);
-void			rm_redirections(t_parser_tools *parser_tools);
+void	rm_redirections(t_parser *parser);
+
+int				add_new_redirection(t_lexer *tmp, t_parser *parser);
+int				handle_heredoc(t_parser *parser_tools, t_lexer *tmp);
+
 
 #endif

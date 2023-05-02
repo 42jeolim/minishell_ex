@@ -1,27 +1,58 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        ::::::::            */
-/*   utils.c                                            :+:    :+:            */
-/*                                                     +:+                    */
-/*   By: fpolycar <fpolycar@student.codam.nl>         +#+                     */
-/*                                                   +#+                      */
-/*   Created: 2022/02/21 11:17:26 by fpolycar      #+#    #+#                 */
-/*   Updated: 2022/04/19 15:12:57 by maiadegraaf   ########   odam.nl         */
-/*                                                                            */
-/* ************************************************************************** */
-
 #include "minishell.h"
 
-int	find_matching_quote(char *line, int i, int *num_del, int del)
+void	free_arr(char **arr);
+char	**ft_arrdup(char **arr);
+int		count_quotes(char *line);
+int		find_matching_quote(char *line, int i, int *num, int tarket);
+
+char	**ft_arrdup(char **arr)
+{
+	char	**res;
+	size_t	i;
+
+	i = 0;
+	while (arr[i]) //arr[i] != NULL
+		i++;
+	res = ft_calloc(sizeof(char *), i + 1);
+	if (!res)
+		return (NULL);
+	i = 0;
+	while (arr[i]) //arr[i] != NULL
+	{
+		res[i] = ft_strdup(arr[i]);
+		if (!res[i]) //res[i] == NULL
+		{
+			free_arr(res);
+			return (res);
+		}
+		i++;
+	}
+	return (res);
+}
+
+void	free_arr(char **arr)
+{
+	int	i;
+
+	i = 0;
+	while (arr[i])
+	{
+		free(arr[i]);
+		i++;
+	}
+	free(arr);
+}
+
+int	find_matching_quote(char *line, int i, int *num, int target)
 {
 	int	j;
 
 	j = i + 1;
-	*num_del += 1;
-	while (line[j] && line[j] != del)
+	*num += 1;
+	while (line[j] && line[j] != target)
 		j++;
-	if (line[j] == del)
-		*num_del += 1;
+	if (line[j] == target)
+		*num += 1;
 	return (j - i);
 }
 
@@ -44,29 +75,4 @@ int	count_quotes(char *line)
 	if ((d > 0 && d % 2 != 0) || (s > 0 && s % 2 != 0))
 		return (0);
 	return (1);
-}
-
-char	**ft_arrdup(char **arr)
-{
-	char	**rtn;
-	size_t	i;
-
-	i = 0;
-	while (arr[i] != NULL)
-		i++;
-	rtn = ft_calloc(sizeof(char *), i + 1);
-	if (!rtn)
-		return (NULL);
-	i = 0;
-	while (arr[i] != NULL)
-	{
-		rtn[i] = ft_strdup(arr[i]);
-		if (rtn[i] == NULL)
-		{
-			free_arr(rtn);
-			return (rtn);
-		}
-		i++;
-	}
-	return (rtn);
 }

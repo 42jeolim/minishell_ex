@@ -1,26 +1,14 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        ::::::::            */
-/*   check_redirections.c                               :+:    :+:            */
-/*                                                     +:+                    */
-/*   By: mgraaf <mgraaf@student.codam.nl>             +#+                     */
-/*                                                   +#+                      */
-/*   Created: 2022/02/25 11:39:57 by mgraaf        #+#    #+#                 */
-/*   Updated: 2022/10/03 17:56:15 by maiadegraaf   ########   odam.nl         */
-/*                                                                            */
-/* ************************************************************************** */
-
 #include "executor.h"
 
-int	check_append_outfile(t_lexer *redirections)
+int	check_append_outfile(t_lexer *redi)
 {
 	int	fd;
 
-	if (redirections->token == GREAT_GREAT)
-		fd = open(redirections->str,
+	if (redi->token == DGREAT)
+		fd = open(redi->str,
 				O_CREAT | O_RDWR | O_APPEND, 0644);
 	else
-		fd = open(redirections->str,
+		fd = open(redi->str,
 				O_CREAT | O_RDWR | O_TRUNC, 0644);
 	return (fd);
 }
@@ -34,63 +22,63 @@ int	handle_infile(char *file)
 	{
 		ft_putstr_fd("minishell: infile: No such file or directory\n",
 			STDERR_FILENO);
-		return (EXIT_FAILURE);
+		return (1);
 	}
 	if (fd > 0 && dup2(fd, STDIN_FILENO) < 0)
 	{
 		ft_putstr_fd("minishell: pipe error\n", STDERR_FILENO);
-		return (EXIT_FAILURE);
+		return (1);
 	}
 	if (fd > 0)
 		close(fd);
-	return (EXIT_SUCCESS);
+	return (0);
 }
 
-int	handle_outfile(t_lexer *redirection)
+int	handle_outfile(t_lexer *redi)
 {
 	int	fd;
 
-	fd = check_append_outfile(redirection);
+	fd = check_append_outfile(redi);
 	if (fd < 0)
 	{
 		ft_putstr_fd("minishell: outfile: Error\n", STDERR_FILENO);
-		return (EXIT_FAILURE);
+		return (1);
 	}
 	if (fd > 0 && dup2(fd, STDOUT_FILENO) < 0)
 	{
 		ft_putstr_fd("minishell: pipe error\n", STDERR_FILENO);
-		return (EXIT_FAILURE);
+		return (1);
 	}
 	if (fd > 0)
 		close(fd);
-	return (EXIT_SUCCESS);
+	return (0);
 }
 
-int	check_redirections(t_simple_cmds *cmd)
+int	check_redirections(t_cmds *cmd)
 {
 	t_lexer	*start;
 
-	start = cmd->redirections;
-	while (cmd->redirections)
+	start = cmd->redi;
+	while (cmd->redi)
 	{
-		if (cmd->redirections->token == LESS)
+		if (cmd->redi->token == LESS)
 		{
-			if (handle_infile(cmd->redirections->str))
-				return (EXIT_FAILURE);
+			if (handle_infile(cmd->redi->str))
+				return (1);
 		}
-		else if (cmd->redirections->token == GREAT
-			|| cmd->redirections->token == GREAT_GREAT)
+		else if (cmd->redi->token == GREAT
+			|| cmd->redi->token == DGREAT)
 		{
-			if (handle_outfile(cmd->redirections))
-				return (EXIT_FAILURE);
+			if (handle_outfile(cmd->redi))
+				return (1);
 		}
-		else if (cmd->redirections->token == LESS_LESS)
+		else if (cmd->redi->token == DLESS)
 		{
-			if (handle_infile(cmd->hd_file_name))
-				return (EXIT_FAILURE);
+			if (handle_infile(cmd->file_name))
+				return (1);
 		}
-		cmd->redirections = cmd->redirections->next;
+		cmd->redi = cmd->redi->next;
 	}
-	cmd->redirections = start;
-	return (EXIT_SUCCESS);
+	cmd->redi = start;
+	return (0);
 }

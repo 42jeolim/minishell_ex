@@ -1,42 +1,37 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        ::::::::            */
-/*   mini_exit.c                                        :+:    :+:            */
-/*                                                     +:+                    */
-/*   By: maiadegraaf <maiadegraaf@student.codam.      +#+                     */
-/*                                                   +#+                      */
-/*   Created: 2022/02/17 10:10:47 by maiadegraaf   #+#    #+#                 */
-/*   Updated: 2022/04/19 15:27:25 by maiadegraaf   ########   odam.nl         */
-/*                                                                            */
-/* ************************************************************************** */
-
 #include "builtins.h"
 #include <signal.h>
 
-void	free_tools(t_tools *tools)
+int		mini_exit(t_data *data, t_cmds *cmd);
+void	free_data(t_data *data);
+void	determine_exit_code(char **str);
+int		is_str_digit(char *str);
+
+int	mini_exit(t_data *data, t_cmds *cmd)
 {
-	free_arr(tools->paths);
-	free_arr(tools->envp);
-	free(tools->args);
-	ft_simple_cmdsclear(&tools->simple_cmds);
-	free(tools->pwd);
-	free(tools->old_pwd);
-	if (tools->pipes)
-		free(tools->pid);
+	char	**str;
+
+	ft_putendl_fd("exit", STDERR_FILENO);
+	if (cmd->str[1] && cmd->str[2])
+	{
+		ft_putstr_fd("minishell: exit: too many arguments\n", STDERR_FILENO);
+		return (1);
+	}
+	str = ft_arrdup(cmd->str);
+	free_data(data);
+	determine_exit_code(str);
+	return (0);
 }
 
-int	is_str_digit(char *str)
+void	free_data(t_data *data)
 {
-	int	i;
-
-	i = 0;
-	while (str[i])
-	{
-		if (!ft_isdigit(str[i]))
-			return (0);
-		i++;
-	}
-	return (1);
+	free_arr(data->paths);
+	free_arr(data->env);
+	free(data->args);
+	cmdclear(&data->cmd);
+	free(data->pwd);
+	free(data->old_pwd);
+	if (data->pipes)
+		free(data->pid);
 }
 
 void	determine_exit_code(char **str)
@@ -58,18 +53,16 @@ void	determine_exit_code(char **str)
 	exit(exit_code);
 }
 
-int	mini_exit(t_tools *tools, t_simple_cmds *simple_cmd)
+int	is_str_digit(char *str)
 {
-	char	**str;
+	int	i;
 
-	ft_putendl_fd("exit", STDERR_FILENO);
-	if (simple_cmd->str[1] && simple_cmd->str[2])
+	i = 0;
+	while (str[i])
 	{
-		ft_putstr_fd("minishell: exit: too many arguments\n", STDERR_FILENO);
-		return (EXIT_FAILURE);
+		if (!ft_isdigit(str[i]))
+			return (0);
+		i++;
 	}
-	str = ft_arrdup(simple_cmd->str);
-	free_tools(tools);
-	determine_exit_code(str);
-	return (EXIT_SUCCESS);
+	return (1);
 }

@@ -1,18 +1,6 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        ::::::::            */
-/*   builtins.c                                         :+:    :+:            */
-/*                                                     +:+                    */
-/*   By: mgraaf <mgraaf@student.codam.nl>             +#+                     */
-/*                                                   +#+                      */
-/*   Created: 2022/02/15 11:42:32 by mgraaf        #+#    #+#                 */
-/*   Updated: 2022/04/19 15:24:14 by maiadegraaf   ########   odam.nl         */
-/*                                                                            */
-/* ************************************************************************** */
-
 #include "builtins.h"
 
-int	(*builtin_arr(char *str))(t_tools *tools, t_simple_cmds *simple_cmd)
+int	(*builtin_type(char *str))(t_data *data, t_cmds *cmd)
 {
 	static void	*builtins[7][2] = {
 	{"echo", mini_echo},

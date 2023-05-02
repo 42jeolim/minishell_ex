@@ -1,29 +1,18 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: jeolim <jeolim@student.42.fr>              +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/02/14 12:04:02 by mgraaf            #+#    #+#             */
-/*   Updated: 2023/05/02 19:25:34 by jeolim           ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
-
 #include "minishell.h"
 
-int	main(int argc, char **argv, char **envp)
+int	main(int ac, char **av, char **env)
 {
-	t_tools	tools;
+	t_data	data;
 
-	if (argc != 1 || argv[1])
+	if (ac != 1 || av[1])
 	{
-		printf("This program does not accept arguments\n");
+		printf("Program cannot executed\n");
 		exit(0);
 	}
-	tools.envp = ft_arrdup(envp);
-	find_pwd(&tools);
-	implement_tools(&tools);
-	minishell_loop(&tools);
+	data.env = ft_arrdup(env); //환경변수 dup
+	find_pwd(&data); //pwd 처리
+	minishell_init(&data); //signal, env 처리
+	print_minishell(); // minishell 꾸미기
+	minishell_loop(&data); //loop
 	return (0);
 }

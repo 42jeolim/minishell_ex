@@ -1,31 +1,19 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   executor.c                                         :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: jeolim <jeolim@student.42.fr>              +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/02/24 15:09:50 by mgraaf            #+#    #+#             */
-/*   Updated: 2023/05/02 18:16:07 by jeolim           ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
-
 #include "executor.h"
 
-t_simple_cmds	*call_expander(t_tools *tools, t_simple_cmds *cmd)
+t_cmds	*call_expander(t_data *data, t_cmds *cmd)
 {
 	t_lexer	*start;
 
-	cmd->str = expander(tools, cmd->str);
-	start = cmd->redirections;
-	while (cmd->redirections)
+	cmd->str = expander(data, cmd->str);
+	start = cmd->redi;
+	while (cmd->redi)
 	{
-		if (cmd->redirections->token != LESS_LESS)
-			cmd->redirections->str
-				= expander_str(tools, cmd->redirections->str);
-		cmd->redirections = cmd->redirections->next;
+		if (cmd->redi->token != DLESS)
+			cmd->redi->str
+				= expander_str(data, cmd->redi->str);
+		cmd->redi = cmd->redi->next;
 	}
-	cmd->redirections = start;
+	cmd->redi = start;
 	return (cmd);
 }
 
@@ -42,66 +30,66 @@ int	pipe_wait(int *pid, int amount)
 	}
 	waitpid(pid[i], &status, 0);
 	if (WIFEXITED(status))
-		g_global.error_num = WEXITSTATUS(status);
-	return (EXIT_SUCCESS);
+		g_mini.error_num = WEXITSTATUS(status);
+	return (0);
 }
 
-int	ft_fork(t_tools *tools, int end[2], int fd_in, t_simple_cmds *cmd)
+int	ft_fork(t_data *data, int end[2], int fd_in, t_cmds *cmd)
 {
 	static int	i = 0;
 
-	if (tools->reset == true)
+	if (data->reset == true)
 	{
 		i = 0;
-		tools->reset = false;
+		data->reset = false;
 	}
-	tools->pid[i] = fork();
-	if (tools->pid[i] < 0)
-		ft_error(5, tools);
-	if (tools->pid[i] == 0)
-		dup_cmd(cmd, tools, end, fd_in);
+	data->pid[i] = fork();
+	if (data->pid[i] < 0)
+		ft_error(5, data);
+	if (data->pid[i] == 0)
+		dup_cmd(cmd, data, end, fd_in);
 	i++;
-	return (EXIT_SUCCESS);
+	return (0);
 }
 
-int	check_fd_heredoc(t_tools *tools, int end[2], t_simple_cmds *cmd)
+int	check_fd_heredoc(t_data *data, int end[2], t_cmds *cmd)
 {
 	int	fd_in;
 
-	if (tools->heredoc)
+	if (data->heredoc)
 	{
 		close(end[0]);
-		fd_in = open(cmd->hd_file_name, O_RDONLY);
+		fd_in = open(cmd->file_name, O_RDONLY);
 	}
 	else
 		fd_in = end[0];
 	return (fd_in);
 }
 
-int	executor(t_tools *tools)
+int	executor(t_data *data)
 {
 	int		end[2];
 	int		fd_in;
 
 	fd_in = STDIN_FILENO;
-	while (tools->simple_cmds)
+	while (data->cmd)
 	{
-		tools->simple_cmds = call_expander(tools, tools->simple_cmds);
-		if (tools->simple_cmds->next)
+		data->cmd = call_expander(data, data->cmd);
+		if (data->cmd->next)
 			pipe(end);
-		send_heredoc(tools, tools->simple_cmds);
-		ft_fork(tools, end, fd_in, tools->simple_cmds);
+		send_heredoc(data, data->cmd);
+		ft_fork(data, end, fd_in, data->cmd);
 		close(end[1]);
-		if (tools->simple_cmds->prev)
+		if (data->cmd->prev)
 			close(fd_in);
-		fd_in = check_fd_heredoc(tools, end, tools->simple_cmds);
+		fd_in = check_fd_heredoc(data, end, data->cmd);
 		printf("fd_in: %d\n", fd_in);
-		if (tools->simple_cmds->next)
-			tools->simple_cmds = tools->simple_cmds->next;
+		if (data->cmd->next)
+			data->cmd = data->cmd->next;
 		else
 			break ;
 	}
-	pipe_wait(tools->pid, tools->pipes);
-	tools->simple_cmds = ft_simple_cmdsfirst(tools->simple_cmds);
+	pipe_wait(data->pid, data->pipes);
+	data->cmd = cmdsfirst(data->cmd);
 	return (0);
 }

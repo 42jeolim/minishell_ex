@@ -1,19 +1,7 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   heredoc.c                                          :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: jeolim <jeolim@student.42.fr>              +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/04/11 17:42:39 by maiadegraaf       #+#    #+#             */
-/*   Updated: 2023/05/02 19:47:42 by jeolim           ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
-
 #include "../../includes/executor.h"
 
 int	create_heredoc(t_lexer *heredoc, bool quotes,
-	t_tools *tools, char *file_name)
+	t_data *data, char *file_name)
 {
 	int		fd;
 	char	*line;
@@ -21,31 +9,28 @@ int	create_heredoc(t_lexer *heredoc, bool quotes,
 	fd = open(file_name, O_CREAT | O_RDWR | O_TRUNC, 0644);
 	line = readline(HEREDOC_MSG);
 	
-	while (line && !g_global.stop_heredoc && ft_strncmp(heredoc->str, line, ft_strlen(heredoc->str) + 1))
+	while (line && !g_mini.stop_heredoc && ft_strncmp(heredoc->str, line, ft_strlen(heredoc->str) + 1))
 	{
-		// if (line && !g_global.stop_heredoc && ft_strncmp(heredoc->str, line, ft_strlen(heredoc->str) + 1))
-		// 	break;
-		printf("%s", heredoc->str);
 		if (quotes == false)
-			line = expander_str(tools, line);
+			line = expander_str(data, line);
 		write(fd, line, ft_strlen(line));
 		write(fd, "\n", 1);
 		free(line);
 		line = readline(HEREDOC_MSG);
 	}
 	free(line);
-	if (g_global.stop_heredoc || !line)
-		return (EXIT_FAILURE);
+	if (g_mini.stop_heredoc || !line)
+		return (1);
 	close(fd);
-	return (EXIT_SUCCESS);
+	return (0);
 }
 
-int	ft_heredoc(t_tools *tools, t_lexer *heredoc, char *file_name)
+int	ft_heredoc(t_data *data, t_lexer *heredoc, char *file_name)
 {
 	bool	quotes;
 	int		sl;
 
-	sl = EXIT_SUCCESS;
+	sl = 0;
 	if ((heredoc->str[0] == '\"'
 			&& heredoc->str[ft_strlen(heredoc->str) - 1] == '\"')
 		|| (heredoc->str[0] == '\''
@@ -55,13 +40,11 @@ int	ft_heredoc(t_tools *tools, t_lexer *heredoc, char *file_name)
 		quotes = false;
 	delete_quotes(heredoc->str, '\"');
 	delete_quotes(heredoc->str, '\'');
-	g_global.stop_heredoc = 0;
-	g_global.in_heredoc = 1;
-	printf(">> %s", heredoc->str);
-	sl = create_heredoc(heredoc, quotes, tools, file_name);
-	g_global.in_heredoc = 0;
-	tools->heredoc = true;
-	printf("** %s", heredoc->str);
+	g_mini.stop_heredoc = 0;
+	g_mini.in_heredoc = 1;
+	sl = create_heredoc(heredoc, quotes, data, file_name);
+	g_mini.in_heredoc = 0;
+	data->heredoc = true;
 	return (sl);
 }
 
@@ -77,31 +60,29 @@ char	*generate_heredoc_filename(void)
 	return (file_name);
 }
 
-int	send_heredoc(t_tools *tools, t_simple_cmds *cmd)
+int	send_heredoc(t_data *data, t_cmds *cmd)
 {
 	t_lexer	*start;
 	int		sl;
 
-	start = cmd->redirections;
-	sl = EXIT_SUCCESS;
-	while (cmd->redirections)
+	start = cmd->redi;
+	sl = 0;
+	while (cmd->redi)
 	{	
-		if (cmd->redirections->token == LESS_LESS)
+		if (cmd->redi->token == DLESS)
 		{
-			if (cmd->hd_file_name)
-				free(cmd->hd_file_name);
-			cmd->hd_file_name = generate_heredoc_filename();
-			sl = ft_heredoc(tools, cmd->redirections, cmd->hd_file_name);
-			printf("check >> : %s\n", cmd->str[0]);
+			if (cmd->file_name)
+				free(cmd->file_name);
+			cmd->file_name = generate_heredoc_filename();
+			sl = ft_heredoc(data, cmd->redi, cmd->file_name);
 			if (sl)
 			{
-				g_global.error_num = 1;
-				return (reset_tools(tools));
+				g_mini.error_num = 1;
+				return (data_reset(data));
 			}
 		}
-		cmd->redirections = cmd->redirections->next;
+		cmd->redi = cmd->redi->next;
 	}
-	cmd->redirections = start;
-	printf("check : %c\n", cmd->str[0][0]);
-	return (EXIT_SUCCESS);
+	cmd->redi = start;
+	return (0);
 }

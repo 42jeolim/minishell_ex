@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
-/*                                                        ::::::::            */
-/*   ft_lstiter.c                                       :+:    :+:            */
-/*                                                     +:+                    */
-/*   By: mgraaf <mgraaf@student.codam.nl>             +#+                     */
-/*                                                   +#+                      */
-/*   Created: 2021/12/16 14:22:22 by mgraaf        #+#    #+#                 */
-/*   Updated: 2021/12/16 14:22:24 by mgraaf        ########   odam.nl         */
+/*                                                        :::      ::::::::   */
+/*   ft_lstiter.c                                       :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: jeolim <jeolim@student.42.fr>              +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/07/08 13:47:14 by jeolim            #+#    #+#             */
+/*   Updated: 2022/07/08 15:08:53 by jeolim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,11 +14,11 @@
 
 void	ft_lstiter(t_list *lst, void (*f)(void *))
 {
-	if (!lst)
+	if (!lst || !f)
 		return ;
 	while (lst)
 	{
-		f(lst->content);
+		(*f)(lst->content);
 		lst = lst->next;
 	}
 }

@@ -1,21 +1,12 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        ::::::::            */
-/*   handle_token.c                                     :+:    :+:            */
-/*                                                     +:+                    */
-/*   By: mgraaf <mgraaf@student.codam.nl>             +#+                     */
-/*                                                   +#+                      */
-/*   Created: 2022/02/18 10:27:43 by mgraaf        #+#    #+#                 */
-/*   Updated: 2022/10/03 17:56:15 by maiadegraaf   ########   odam.nl         */
-/*                                                                            */
-/* ************************************************************************** */
+#include "minishell.h"
 
-#include "utils.h"
-#include "lexer.h"
+t_tokens	check_token(int c);
+int			handle_token(char *str, int i, t_lexer **lex);
+int			handle_quotes(int i, char *str, char tarket);
 
 t_tokens	check_token(int c)
 {
-	static int	token_arr[3][2] = {
+	static int	token_type[3][2] = {
 	{'|', PIPE},
 	{'>', GREAT},
 	{'<', LESS},
@@ -25,35 +16,50 @@ t_tokens	check_token(int c)
 	i = 0;
 	while (i < 3)
 	{
-		if (token_arr[i][0] == c)
-			return (token_arr[i][1]);
+		if (token_type[i][0] == c)
+			return (token_type[i][1]);
 		i++;
 	}
 	return (0);
 }
 
-int	handle_token(char *str, int i, t_lexer **lexer_list) //work_token
+int	handle_token(char *str, int i, t_lexer **lex)
 {
 	t_tokens	token;
 
 	token = check_token(str[i]);
 	if (token == GREAT && check_token(str[i + 1]) == GREAT)
 	{
-		if (!add_node(NULL, GREAT_GREAT, lexer_list))
+		if (!add_node(NULL, DGREAT, lex))
 			return (-1);
 		return (2);
 	}
 	else if (token == LESS && check_token(str[i + 1]) == LESS)
 	{
-		if (!add_node(NULL, LESS_LESS, lexer_list))
+		if (!add_node(NULL, DLESS, lex))
 			return (-1);
 		return (2);
 	}
 	else if (token)
 	{
-		if (!add_node(NULL, token, lexer_list))
+		if (!add_node(NULL, token, lex))
 			return (-1);
 		return (1);
 	}	
 	return (0);
+}
+
+int	handle_quotes(int i, char *str, char tarket)
+{
+	int	j;
+
+	j = 0;
+	if (str[i + j] == tarket)
+	{
+		j++;
+		while (str[i + j] != tarket && str[i + j])
+			j++;
+		j++;
+	}
+	return (j);
 }

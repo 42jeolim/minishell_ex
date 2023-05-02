@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
-/*                                                        ::::::::            */
-/*   ft_strnstr.c                                       :+:    :+:            */
-/*                                                     +:+                    */
-/*   By: mgraaf <mgraaf@student.codam.nl>             +#+                     */
-/*                                                   +#+                      */
-/*   Created: 2021/12/16 14:24:54 by mgraaf        #+#    #+#                 */
-/*   Updated: 2021/12/16 14:24:55 by mgraaf        ########   odam.nl         */
+/*                                                        :::      ::::::::   */
+/*   ft_strnstr.c                                       :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: jeolim <jeolim@student.42.fr>              +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/07/06 16:47:14 by jeolim            #+#    #+#             */
+/*   Updated: 2022/07/08 14:15:07 by jeolim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,21 +14,22 @@
 
 char	*ft_strnstr(const char *haystack, const char *needle, size_t len)
 {
-	int	i;
+	size_t	idx;
+	size_t	j;
 
-	if (needle[0] == '\0')
+	idx = 0;
+	if (!ft_strlen(needle))
 		return ((char *)haystack);
-	while (*haystack && len > 0)
+	while (haystack[idx] && idx < len)
 	{
-		i = 0;
-		while (haystack[i] == needle[i] && (len - i) > 0)
+		j = 0;
+		while (needle[j] == haystack[idx + j] && idx + j < len)
 		{
-			i++;
-			if (needle[i] == '\0')
-				return ((char *)haystack);
+			j++;
+			if (!needle[j])
+				return (&((char *)haystack)[idx]);
 		}
-		haystack++;
-		len--;
+		idx++;
 	}
-	return (0);
+	return ((void *)0);
 }

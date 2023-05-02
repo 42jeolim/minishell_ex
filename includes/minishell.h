@@ -1,17 +1,6 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        ::::::::            */
-/*   minishell.h                                        :+:    :+:            */
-/*                                                     +:+                    */
-/*   By: mgraaf <mgraaf@student.codam.nl>             +#+                     */
-/*                                                   +#+                      */
-/*   Created: 2022/02/14 13:46:41 by mgraaf        #+#    #+#                 */
-/*   Updated: 2022/10/03 17:56:15 by maiadegraaf   ########   odam.nl         */
-/*                                                                            */
-/* ************************************************************************** */
-
 #ifndef MINISHELL_H
 # define MINISHELL_H
+
 # include "libft.h"
 # include <stdio.h>
 # include <stdlib.h>
@@ -25,40 +14,38 @@
 # include "utils.h"
 # include "error.h"
 # include "lexer.h"
-# include "color.h"
 # include "builtins.h"
 # include "executor.h"
 
-int		parse_envp(t_tools *tools);
-int		find_pwd(t_tools *tools);
-int		reset_tools(t_tools *tools);
-void	init_stri(int i, int j, t_tools *tools);
-char	**expander(t_tools *tools, char **str);
-char	*expander_str(t_tools *tools, char *str);
+# define READLINE_MSG	"\033[1;35mminishell\033[34m$ \033[0m"
+# define HEREDOC_MSG	"\033[1;34m> \033[0m"
+# define False			0
+# define True			1
+
+// int		parse_envp(t_data *data);
+// int		find_pwd(t_data *data);
+
+void	init_stri(int i, int j, t_data *data);
+char	**expander(t_data *data, char **str);
+char	*expander_str(t_data *data, char *str);
 size_t	dollar_sign(char *str);
 char	*char_to_str(char c);
 int		after_dol_lenght(char *str, int j);
-void	free_things(char *tmp2, t_tools *tools, int i);
-void	print_parser(t_simple_cmds simple_cmds);
+void	free_things(char *tmp2, t_data *data, int i);
+void	print_parser(t_cmds cmd);
 char	*delete_quotes_value(char *str);
-void	sigint_handler(int sig);
-void	sigquit_handler(int sig);
-void	init_signals(void);
 char	*delete_quotes(char *str, char c);
 char	*delete_quotes_export(char *str, char c);
 int		question_mark(char **tmp);
 
-//builtins
-int		(*builtin_arr(char *str))(t_tools *tools, t_simple_cmds *simple_cmd);
-
-typedef struct s_global
+typedef struct s_mini
 {
 	int	error_num;
 	int	stop_heredoc;
 	int	in_cmd;
 	int	in_heredoc;
-}	t_global;
+}	t_mini;
 
-t_global	g_global;
+t_mini				g_mini; //global 변수 사용 이유 설명
 
 #endif

@@ -1,19 +1,14 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        ::::::::            */
-/*   lexor.h                                            :+:    :+:            */
-/*                                                     +:+                    */
-/*   By: mgraaf <mgraaf@student.codam.nl>             +#+                     */
-/*                                                   +#+                      */
-/*   Created: 2022/02/17 17:55:06 by mgraaf        #+#    #+#                 */
-/*   Updated: 2022/10/03 17:56:15 by maiadegraaf   ########   odam.nl         */
-/*                                                                            */
-/* ************************************************************************** */
-
 #ifndef lexer_H
 # define lexer_H
 # include "minishell.h"
 
-int		handle_quotes(int i, char *str, char del);
+// tokenizer
+int	tokenizer(t_data *data);
+int	add_node(char *str, t_tokens token, t_lexer **lex);
+
+// handle_token
+t_tokens	check_token(int c);
+int			handle_token(char *str, int i, t_lexer **lex);
+int			handle_quotes(int i, char *str, char tarket);
 
 #endif

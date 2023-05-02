@@ -1,36 +1,35 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        ::::::::            */
-/*   mini_export.c                                      :+:    :+:            */
-/*                                                     +:+                    */
-/*   By: fpolycar <fpolycar@student.codam.nl>         +#+                     */
-/*                                                   +#+                      */
-/*   Created: 2022/03/24 16:07:21 by fpolycar      #+#    #+#                 */
-/*   Updated: 2022/04/19 15:11:16 by maiadegraaf   ########   odam.nl         */
-/*                                                                            */
-/* ************************************************************************** */
-
 #include "builtins.h"
 
-int	variable_exist(t_tools *tools, char *str)
-{
-	int	i;
+int		mini_export(t_data *data, t_cmds *cmd);
+int		check_parameter(char *str);
+int		variable_exist(t_data *data, char *str);
+char	**add_var(char **arr, char *str);
+char	**add_var_loop(char **arr, char **rtn, char *str);
 
-	i = 0;
-	if (str[equal_sign(str)] == '\"')
-		delete_quotes(str, '\"');
-	if (str[equal_sign(str)] == '\'')
-		delete_quotes(str, '\'');
-	while (tools->envp[i])
+int	mini_export(t_data *data, t_cmds *cmd)
+{
+	char	**tmp;
+	int		i;
+
+	i = 1;
+	if (!cmd->str[1] || cmd->str[1][0] == '\0')
+		mini_env(data, cmd);
+	else
 	{
-		if (ft_strncmp(tools->envp[i],
-				str, equal_sign(tools->envp[i])) == 0)
+		while (cmd->str[i])
 		{
-			free(tools->envp[i]);
-			tools->envp[i] = ft_strdup(str);
-			return (1);
+			if (check_parameter(cmd->str[i]) == 0
+				&& variable_exist(data, cmd->str[i]) == 0)
+			{
+				if (cmd->str[i])
+				{
+					tmp = add_var(data->env, cmd->str[i]);
+					free_arr(data->env);
+					data->env = tmp;
+				}
+			}
+			i++;
 		}
-		i++;
 	}
 	return (0);
 }
@@ -43,7 +42,7 @@ int	check_parameter(char *str)
 	if (ft_isdigit(str[0]))
 		return (export_error(str));
 	if (equal_sign(str) == 0)
-		return (EXIT_FAILURE);
+		return (1);
 	if (str[0] == '=')
 		return (export_error(str));
 	while (str[i] != '=')
@@ -52,36 +51,35 @@ int	check_parameter(char *str)
 			return (export_error(str));
 		i++;
 	}
-	return (EXIT_SUCCESS);
+	return (0);
 }
 
-char	**whileloop_add_var(char **arr, char **rtn, char *str)
+int	variable_exist(t_data *data, char *str)
 {
 	int	i;
 
 	i = 0;
-	while (arr[i] != NULL)
+	if (str[equal_sign(str)] == '\"')
+		delete_quotes(str, '\"');
+	if (str[equal_sign(str)] == '\'')
+		delete_quotes(str, '\'');
+	while (data->env[i])
 	{
-		if (arr[i + 1] == NULL)
+		if (ft_strncmp(data->env[i],
+				str, equal_sign(data->env[i])) == 0)
 		{
-			rtn[i] = ft_strdup(str);
-			rtn[i + 1] = ft_strdup(arr[i]);
-		}
-		else
-			rtn[i] = ft_strdup(arr[i]);
-		if (rtn[i] == NULL)
-		{
-			free_arr(rtn);
-			return (rtn);
+			free(data->env[i]);
+			data->env[i] = ft_strdup(str);
+			return (1);
 		}
 		i++;
 	}
-	return (rtn);
+	return (0);
 }
 
 char	**add_var(char **arr, char *str)
 {
-	char	**rtn;
+	char	**res;
 	size_t	i;
 
 	i = 0;
@@ -91,38 +89,35 @@ char	**add_var(char **arr, char *str)
 		delete_quotes(str, '\'');
 	while (arr[i] != NULL)
 		i++;
-	rtn = ft_calloc(sizeof(char *), i + 2);
-	if (!rtn)
+	res = ft_calloc(sizeof(char *), i + 2);
+	if (!res)
 		return (NULL);
 	i = 0;
-	whileloop_add_var(arr, rtn, str);
-	return (rtn);
+	add_var_loop(arr, res, str);
+	return (res);
 }
 
-int	mini_export(t_tools *tools, t_simple_cmds *simple_cmd)
+char	**add_var_loop(char **arr, char **res, char *str)
 {
-	char	**tmp;
-	int		i;
+	int	i;
 
-	i = 1;
-	if (!simple_cmd->str[1] || simple_cmd->str[1][0] == '\0')
-		mini_env(tools, simple_cmd);
-	else
+	i = 0;
+	while (arr[i] != NULL)
 	{
-		while (simple_cmd->str[i])
+		if (arr[i + 1] == NULL)
 		{
-			if (check_parameter(simple_cmd->str[i]) == 0
-				&& variable_exist(tools, simple_cmd->str[i]) == 0)
-			{
-				if (simple_cmd->str[i])
-				{
-					tmp = add_var(tools->envp, simple_cmd->str[i]);
-					free_arr(tools->envp);
-					tools->envp = tmp;
-				}
-			}
-			i++;
+			res[i] = ft_strdup(str);
+			res[i + 1] = ft_strdup(arr[i]);
 		}
+		else
+			res[i] = ft_strdup(arr[i]);
+		if (res[i] == NULL)
+		{
+			free_arr(res);
+			return (res);
+		}
+		i++;
 	}
-	return (EXIT_SUCCESS);
+	return (res);
 }
+

@@ -1,26 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
-/*                                                        ::::::::            */
-/*   ft_memset.c                                        :+:    :+:            */
-/*                                                     +:+                    */
-/*   By: mgraaf <mgraaf@student.codam.nl>             +#+                     */
-/*                                                   +#+                      */
-/*   Created: 2021/12/16 14:23:22 by mgraaf        #+#    #+#                 */
-/*   Updated: 2021/12/16 14:23:23 by mgraaf        ########   odam.nl         */
+/*                                                        :::      ::::::::   */
+/*   ft_memset.c                                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: jeolim <jeolim@student.42seoul.kr>         +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/07/06 13:37:06 by jeolim            #+#    #+#             */
+/*   Updated: 2022/07/08 13:57:35 by jeolim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-void	*ft_memset(void *str, int c, size_t n)
+void	*ft_memset(void *ptr, int value, size_t len)
 {
-	size_t	i;
+	size_t	idx;
+	char	*tmp;
 
-	i = 0;
-	while (i < n)
-	{
-		((char *)str)[i] = c;
-		i++;
-	}
-	return ((void *)str);
+	tmp = (char *)ptr;
+	idx = 0;
+	while (idx < len)
+		tmp[idx++] = (unsigned char)value;
+	return (ptr);
 }

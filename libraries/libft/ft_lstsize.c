@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
-/*                                                        ::::::::            */
-/*   ft_lstsize.c                                       :+:    :+:            */
-/*                                                     +:+                    */
-/*   By: mgraaf <mgraaf@student.codam.nl>             +#+                     */
-/*                                                   +#+                      */
-/*   Created: 2021/12/16 14:22:43 by mgraaf        #+#    #+#                 */
-/*   Updated: 2021/12/16 14:22:45 by mgraaf        ########   odam.nl         */
+/*                                                        :::      ::::::::   */
+/*   ft_lstsize.c                                       :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: jeolim <jeolim@student.42seoul.kr>         +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/07/08 13:52:47 by jeolim            #+#    #+#             */
+/*   Updated: 2022/07/08 13:53:31 by jeolim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,13 +14,13 @@
 
 int	ft_lstsize(t_list *lst)
 {
-	int	i;
+	int	count;
 
-	i = 0;
-	while (lst != NULL)
+	count = 0;
+	while (lst)
 	{
 		lst = lst->next;
-		i++;
+		count++;
 	}
-	return (i);
+	return (count);
 }

@@ -1,42 +1,41 @@
 /* ************************************************************************** */
 /*                                                                            */
-/*                                                        ::::::::            */
-/*   ft_atoi.c                                          :+:    :+:            */
-/*                                                     +:+                    */
-/*   By: mgraaf <mgraaf@student.codam.nl>             +#+                     */
-/*                                                   +#+                      */
-/*   Created: 2021/12/16 14:18:44 by mgraaf        #+#    #+#                 */
-/*   Updated: 2021/12/16 14:18:46 by mgraaf        ########   odam.nl         */
+/*                                                        :::      ::::::::   */
+/*   ft_atoi.c                                          :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: jeolim <jeolim@student.42.fr>              +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/07/06 14:43:02 by jeolim            #+#    #+#             */
+/*   Updated: 2022/07/11 17:24:57 by jeolim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
+#include <limits.h>
 
 int	ft_atoi(const char *str)
 {
-	int	ret;
-	int	p_n;
-	int	i;
+	unsigned long long	num;
+	int					sign;
 
-	i = 0;
-	ret = 0;
-	p_n = 1;
-	while (*str == ' ' || (*str > 8 && *str < 14))
+	sign = 1;
+	num = 0;
+	while ((*str >= 9 && *str <= 13) || *str == ' ')
 		str++;
 	if (*str == '-' || *str == '+')
 	{
 		if (*str == '-')
-			p_n *= -1;
+			sign *= (-1);
 		str++;
 	}
-	while (ft_isdigit(str[i]) == 1)
+	while (*str >= '0' && *str <= '9')
 	{
-		ret = (ret * 10) + (str[i] - '0');
-		i++;
-		if (i == 10 && str[i] && p_n == -1)
-			return (0);
-		else if (i == 10 && str[i])
-			return (-1);
+		num = num * 10 + (*str - '0');
+		str++;
 	}
-	return (ret * p_n);
+	if (num > (unsigned long long)LLONG_MAX + 1 && sign == -1)
+		return (0);
+	if (num > LLONG_MAX && sign == 1)
+		return (-1);
+	return ((int)(num * sign));
 }

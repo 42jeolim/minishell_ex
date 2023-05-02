@@ -1,38 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
-/*                                                        ::::::::            */
-/*   ft_strrchr.c                                       :+:    :+:            */
-/*                                                     +:+                    */
-/*   By: mgraaf <mgraaf@student.codam.nl>             +#+                     */
-/*                                                   +#+                      */
-/*   Created: 2021/12/16 14:24:59 by mgraaf        #+#    #+#                 */
-/*   Updated: 2021/12/16 14:25:00 by mgraaf        ########   odam.nl         */
+/*                                                        :::      ::::::::   */
+/*   ft_strrchr.c                                       :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: jeolim <jeolim@student.42.fr>              +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/07/06 14:36:37 by jeolim            #+#    #+#             */
+/*   Updated: 2022/07/08 16:58:56 by jeolim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-
 #include "libft.h"
 
-char	*ft_strrchr(const char *s, int c)
+char	*ft_strrchr(const char *str, int c)
 {
-	int		i;
+	char	*ptr;
 
-	i = ft_strlen(s) - 1;
-	while (i >= 0)
+	ptr = NULL;
+	while (*str)
 	{
-		if (s[i] == (unsigned char)c)
-		{
-			while (i > 0)
-			{
-				s++;
-				i--;
-			}
-			return ((char *)s);
-		}
-		i--;
+		if (*str == (char)c)
+			ptr = (char *)str;
+		str++;
 	}
-	while (*s)
-		s++;
-	if (*s == (unsigned char)c)
-		return ((char *)s);
-	return (0);
+	if (c == '\0')
+		return ((char *)str);
+	return (ptr);
 }

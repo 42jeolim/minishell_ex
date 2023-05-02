@@ -1,93 +1,50 @@
-NAME := libft.a
-SRCFILES := \
-	ft_atoi.c \
-	ft_bzero.c \
-	ft_isalnum.c \
-	ft_isalpha.c \
-	ft_isascii.c \
-	ft_isdigit.c \
-	ft_isprint.c \
-	ft_memchr.c \
-	ft_memcmp.c \
-	ft_memcpy.c \
-	ft_memmove.c \
-	ft_memset.c \
-	ft_strchr.c \
-	ft_strlcat.c \
-	ft_strlcpy.c \
-	ft_strlen.c \
-	ft_strncmp.c \
-	ft_strnstr.c \
-	ft_strrchr.c \
-	ft_tolower.c \
-	ft_toupper.c \
-	ft_strdup.c \
-	ft_calloc.c \
-	ft_substr.c \
-	ft_strjoin.c \
-	ft_strtrim.c \
-	ft_split.c \
-	ft_itoa.c \
-	ft_strmapi.c \
-	ft_striteri.c \
-	ft_putchar_fd.c \
-	ft_putstr_fd.c \
-	ft_putendl_fd.c \
-	ft_putnbr_fd.c \
-	get_next_line/get_next_line_utils.c \
-	get_next_line/get_next_line.c \
-	ft_printf/ft_convert_hex.c \
-	ft_printf/ft_determine_type.c \
-	ft_printf/ft_if_char.c \
-	ft_printf/ft_if_hex.c \
-	ft_printf/ft_if_num.c \
-	ft_printf/ft_printf.c \
-	ft_printf/ft_putstr_size.c \
-	ft_printf/ft_putunsignedint_fd.c
+SRCS =  ft_isalpha.c ft_isdigit.c ft_isalnum.c ft_isprint.c\
+		ft_strlen.c ft_strlcpy.c ft_strlcat.c ft_strchr.c\
+		ft_strrchr.c ft_strncmp.c ft_strnstr.c ft_strdup.c\
+		ft_memset.c ft_memcpy.c ft_memmove.c ft_memchr.c ft_memcmp.c\
+		ft_bzero.c ft_toupper.c ft_tolower.c ft_atoi.c ft_calloc.c\
+		ft_substr.c ft_strjoin.c ft_strtrim.c ft_itoa.c\
+		ft_strmapi.c ft_striteri.c ft_putchar_fd.c ft_putstr_fd.c\
+		ft_putendl_fd.c ft_putnbr_fd.c ft_isascii.c ft_split.c
 
-OBJFILES = ${SRCFILES:%.c=%.o}
+BNS_SRCS = ft_lstsize.c ft_lstadd_back.c ft_lstadd_front.c \
+		   ft_lstclear.c ft_lstdelone.c ft_lstiter.c \
+		   ft_lstlast.c ft_lstmap.c ft_lstnew.c
 
-BONUS_SRCFILES := \
-	ft_lstadd_front.c \
-	ft_lstnew.c \
-	ft_lstsize.c \
-	ft_lstlast.c \
-	ft_lstadd_back.c \
-	ft_lstdelone.c \
-	ft_lstclear.c \
-	ft_lstiter.c \
-	ft_lstmap.c
+OBJS = $(SRCS:.c=.o)
+BNS_OBJS = $(BNS_SRCS:.c=.o)
 
-BONUS_OBJFILES = ${BONUS_SRCFILES:%.c=%.o}
+CC = cc
+FLAGS = -Wall -Wextra -Werror
+NAME = libft.a
+RM = rm -f
+AR = ar -rcs
+INCLUDES = libft.h
 
-HEADERFILES := libft.h
+YELLOW=\033[1;33m
+GREEN=\033[0;32m
+NC=\033[0m
 
-CFLAGS	= -Wall -Wextra -Werror -g
+all	:	$(NAME)
 
-ifdef WITH_BONUS
-ALL_OBJS = $(OBJFILES) $(BONUS_OBJFILES)
-else
-ALL_OBJS = $(OBJFILES)
-endif
+$(NAME)	:	$(OBJS)
+		@$(AR) $(NAME) $(OBJS)
+		@echo "\n⭐️ ${YELLOW}$(NAME) created ⭐️${NC}"
 
-all: libft.a
+bonus :		$(OBJS) $(BNS_OBJS)
+		@make OBJS="$(OBJS) ${BNS_OBJS}"
+		
+%.o : %.c $(INCLUDES)
+	@$(CC) $(FLAGS) -c $< -o $@
+	@printf "$(GREEN)██${NC}"
+clean	:
+		@$(RM) $(OBJS) $(BNS_OBJS)
 
-%.o: %.c $(HEADERFILES)
-	@$(CC) -c $(CFLAGS) -o $@ $<
+fclean	:	clean
+		@$(RM) $(NAME)
 
-$(NAME): $(ALL_OBJS)
-	@ar -ru $(NAME) $^
-	@echo "Libft succesfully created"
+re	:	
+	@make fclean 
+	@make all
 
-bonus: 
-	@$(MAKE) WITH_BONUS=1
-
-clean:
-	@rm -f $(OBJFILES) $(BONUS_OBJFILES)
-
-fclean: clean
-	@rm -f $(NAME) $^
-
-re: fclean all
-
-.PHONY: clean fclean re bonus
+.PHONY	:	all clean fclean re bonus

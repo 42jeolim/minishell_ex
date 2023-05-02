@@ -1,76 +1,63 @@
 /* ************************************************************************** */
 /*                                                                            */
-/*                                                        ::::::::            */
-/*   ft_itoa.c                                          :+:    :+:            */
-/*                                                     +:+                    */
-/*   By: mgraaf <mgraaf@student.codam.nl>             +#+                     */
-/*                                                   +#+                      */
-/*   Created: 2021/12/16 14:21:55 by mgraaf        #+#    #+#                 */
-/*   Updated: 2021/12/16 14:21:59 by mgraaf        ########   odam.nl         */
+/*                                                        :::      ::::::::   */
+/*   ft_itoa.c                                          :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: jeolim <jeolim@student.42seoul.kr>         +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/07/08 13:41:33 by jeolim            #+#    #+#             */
+/*   Updated: 2022/07/08 14:30:32 by jeolim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-int	determine_length(long long n, int neg_or_pos)
+static int	get_numlen(int n)
 {
-	int	i;
+	int		len;
+	long	num;
 
-	i = 0;
-	if (n == 0)
-		i++;
-	while (n > 0)
+	num = (long)n;
+	len = 0;
+	if (num == 0)
+		return (1);
+	else if (num < 0)
 	{
-		n = n / 10;
-		i++;
+		num = -num;
+		len++;
 	}
-	if (neg_or_pos)
-		i++;
-	return (i);
-}
-
-char	*fill_arr(long long n, char *arr, int i, int neg_or_pos)
-{
-	arr[i] = '\0';
-	i--;
-	if (n == 0)
+	while (num)
 	{
-		arr[i] = '0';
-		i--;
+		num = num / 10;
+		len++;
 	}
-	while (n > 0)
-	{
-		arr[i] = (n % 10) + '0';
-		i--;
-		n = n / 10;
-	}
-	if (neg_or_pos)
-	{
-		arr[i] = '-';
-		i++;
-	}
-	return (arr);
+	return (len);
 }
 
 char	*ft_itoa(int n)
 {
-	int			i;
-	int			neg_or_pos;
-	char		*arr;
-	long long	j;
+	int		len;
+	char	*result;
+	long	num;
 
-	neg_or_pos = 0;
-	if (n < 0)
+	result = NULL;
+	len = get_numlen(n);
+	result = malloc(sizeof(char) * (len + 1));
+	if (!result)
+		return (NULL);
+	num = (long)n;
+	if (num == 0)
+		result[0] = '0';
+	else if (num < 0)
 	{
-		neg_or_pos = 1;
-		j = (long long)n * -1;
+		num = -num;
+		result[0] = '-';
 	}
-	else
-		j = (long long)n;
-	i = determine_length(j, neg_or_pos);
-	arr = malloc(i * sizeof(char) + 1);
-	if (!arr)
-		return (0);
-	arr = fill_arr(j, arr, i, neg_or_pos);
-	return (arr);
+	result[len] = '\0';
+	while (num)
+	{
+		result[--len] = num % 10 + '0';
+		num = num / 10;
+	}
+	return (result);
 }

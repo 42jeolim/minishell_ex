@@ -1,86 +1,111 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        ::::::::            */
-/*   minishell_loop.c                                   :+:    :+:            */
-/*                                                     +:+                    */
-/*   By: fpolycar <fpolycar@student.codam.nl>         +#+                     */
-/*                                                   +#+                      */
-/*   Created: 2022/03/24 16:06:58 by fpolycar      #+#    #+#                 */
-/*   Updated: 2022/10/03 17:56:15 by maiadegraaf   ########   odam.nl         */
-/*                                                                            */
-/* ************************************************************************** */
-
 #include "minishell.h"
 
-int	minishell_loop(t_tools *tools);
+int		minishell_loop(t_data *data);
+int		minishell_init(t_data *data);
+void	print_minishell(void);
+int		data_reset(t_data *data);
+int		executor_init(t_data *data);
 
-int	implement_tools(t_tools *tools)
-{
-	tools->simple_cmds = NULL;
-	tools->lexer_list = NULL;
-	tools->reset = false;
-	tools->pid = NULL;
-	tools->heredoc = false;
-	g_global.stop_heredoc = 0;
-	g_global.in_cmd = 0;
-	g_global.in_heredoc = 0;
-	parse_envp(tools);
-	init_signals();
-	return (1);
-}
-
-int	reset_tools(t_tools *tools)
-{
-	ft_simple_cmdsclear(&tools->simple_cmds); //cmdclear
-	free(tools->args);
-	if (tools->pid)
-		free(tools->pid);
-	free_arr(tools->paths);
-	implement_tools(tools);
-	tools->reset = true;
-	minishell_loop(tools);
-	return (1);
-}
-
-int	prepare_executor(t_tools *tools)
-{
-	signal(SIGQUIT, sigquit_handler);
-	g_global.in_cmd = 1;
-	if (tools->pipes == 0)
-		single_cmd(tools->simple_cmds, tools);
-	else
-	{
-		tools->pid = ft_calloc(sizeof(int), tools->pipes + 2);
-		if (!tools->pid)
-			return (ft_error(1, tools));
-		executor(tools);
-	}
-	g_global.in_cmd = 0;
-	return (EXIT_SUCCESS);
-}
-
-int	minishell_loop(t_tools *tools)
+int	minishell_loop(t_data *data)
 {
 	char	*tmp;
 
-	tools->args = readline(READLINE_MSG);
-	tmp = ft_strtrim(tools->args, " ");
-	free(tools->args);
-	tools->args = tmp;
-	if (!tools->args)
+	data->args = readline(READLINE_MSG);
+	tmp = ft_strtrim(data->args, " ");
+	free(data->args);
+	data->args = tmp;
+	if (!data->args)
 	{
 		ft_putendl_fd("exit", STDOUT_FILENO);
-		exit(EXIT_SUCCESS);
+		exit(0);
 	}
-	if (tools->args[0] == '\0')
-		return (reset_tools(tools));
-	add_history(tools->args);
-	if (!count_quotes(tools->args))
-		return (ft_error(2, tools));
-	if (!token_reader(tools))
-		return (ft_error(1, tools));
-	parser(tools);
-	prepare_executor(tools);
-	reset_tools(tools) ;
+	if (data->args[0] == '\0')
+		return (data_reset(data));
+	add_history(data->args); // 명령어 기록 남기기
+	if (!count_quotes(data->args)) //quote counting
+		return (ft_error(2, data));
+	if (!tokenizer(data))
+		return (ft_error(1, data));
+	parser(data);
+	executor_init(data);
+	data_reset(data); // loop
 	return (1);
+}
+
+int	minishell_init(t_data *data)
+{
+	data->cmd = NULL;
+	data->lexer_list = NULL;
+	data->pid = NULL;
+	data->heredoc = False;
+	data->reset = False;
+	g_mini.stop_heredoc = 0;
+	g_mini.in_cmd = 0;
+	g_mini.in_heredoc = 0;
+	parse_env(data); //환경변수 처리
+	init_signal();
+	return (1);
+}
+
+int	data_reset(t_data *data)
+{
+	cmdclear(&data->cmd);
+	free(data->args);
+	if (data->pid)
+		free(data->pid);
+	free_arr(data->paths);
+	minishell_init(data);
+	data->reset = True;
+	minishell_loop(data);
+	return (1);
+}
+
+int	prepare_executor(t_data *data)
+{
+	signal(SIGQUIT, sigquit_handler);
+	g_mini.in_cmd = 1;
+	if (data->pipes == 0)
+		single_cmd(data->cmd, data);
+	else
+	{
+		data->pid = ft_calloc(sizeof(int), data->pipes + 2);
+		if (!data->pid)
+			return (ft_error(1, data));
+		executor(data);
+	}
+	g_mini.in_cmd = 0;
+	return (0);
+}
+
+int	executor_init(t_data *data)
+{
+	signal(SIGQUIT, sigquit_handler);
+	g_mini.in_cmd = 1;
+	if (data->pipes == 0)
+		single_cmd(data->cmd, data);
+	else
+	{
+		data->pid = ft_calloc(sizeof(int), data->pipes + 2);
+		if (!data->pid)
+			return (ft_error(1, data));
+		executor(data);
+	}
+	g_mini.in_cmd = 0;
+	return (0);
+}
+
+void	print_minishell(void)
+{
+	printf("\n\
+───▄▀▀▀▄▄▄▄▄▄▄▀▀▀▄───minishell\n\
+───█▒▒░░░░░░░░░▒▒█───\n\
+────█░░█░░░░░█░░█────\n\
+─▄▄──█░░░▀█▀░░░█──▄▄─\n\
+█░░█─▀▄░░░░░░░▄▀─█░░█\n\
+█▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀█\n\
+█░░╦ ╦╔╗╦ ╔╗╔╗╔╦╗╔╗░░█\n\
+█░░║║║╠ ║ ║ ║║║║║╠ ░░█\n\
+█░░╚╩╝╚╝╚╝╚╝╚╝╩ ╩╚╝░░█\n\
+█▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄█\n\
+\n");
 }

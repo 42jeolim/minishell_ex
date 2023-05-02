@@ -1,25 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
-/*                                                        ::::::::            */
-/*   ft_strlen.c                                        :+:    :+:            */
-/*                                                     +:+                    */
-/*   By: mgraaf <mgraaf@student.codam.nl>             +#+                     */
-/*                                                   +#+                      */
-/*   Created: 2021/12/16 14:24:28 by mgraaf        #+#    #+#                 */
-/*   Updated: 2022/04/13 11:02:53 by maiadegraaf   ########   odam.nl         */
+/*                                                        :::      ::::::::   */
+/*   ft_strlen.c                                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: jeolim <jeolim@student.42.fr>              +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/07/06 15:58:34 by jeolim            #+#    #+#             */
+/*   Updated: 2022/07/08 14:13:35 by jeolim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-size_t	ft_strlen(const char *str)
+size_t	ft_strlen(const char *s)
 {
-	int	i;
+	size_t	count;
 
-	i = 0;
-	if (!str[i])
-		return (i);
-	while (str[i])
-		i++;
-	return (i);
+	count = 0;
+	while (s[count])
+		count++;
+	return (count);
 }

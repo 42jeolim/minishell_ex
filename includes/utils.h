@@ -1,44 +1,38 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        ::::::::            */
-/*   utils.h                                            :+:    :+:            */
-/*                                                     +:+                    */
-/*   By: mgraaf <mgraaf@student.codam.nl>             +#+                     */
-/*                                                   +#+                      */
-/*   Created: 2022/02/17 15:36:23 by mgraaf        #+#    #+#                 */
-/*   Updated: 2022/10/03 17:56:15 by maiadegraaf   ########   odam.nl         */
-/*                                                                            */
-/* ************************************************************************** */
-
 #ifndef UTILS_H
 # define UTILS_H
 # include "minishell.h"
 
+// parse_pwd
+int					find_pwd(t_data *data);
+void				parse_env(t_data *data);
+
 // utils
-int				count_quotes(char *line);
-int				implement_tools(t_tools *tools);
-char			**ft_arrdup(char **arr);
+char			    **ft_arrdup(char **arr);
+void			    free_arr(char **arr);
+int				    count_quotes(char *line);
 
-int				minishell_loop(t_tools *tools);
+// minishell_loop
+int					minishell_init(t_data *data);
+void				print_minishell(void);
+int					minishell_loop(t_data *data);
+int					data_reset(t_data *data);
 
-//t_simple_cmds_utils
-t_simple_cmds	*ft_simple_cmdsnew(char **str,
-					int num_redirections, t_lexer *redirections);
-void			ft_simple_cmdsadd_back(t_simple_cmds **lst, t_simple_cmds *new);
-void			ft_simple_cmds_rm_first(t_simple_cmds **lst);
-void			ft_simple_cmdsclear(t_simple_cmds **lst);
-t_simple_cmds	*ft_simple_cmdsfirst(t_simple_cmds *map);
+// signal
+void				init_signal(void);
+void				sigquit_handler(int sig);
 
-//t_lexer_utils
-t_lexer			*ft_lexernew(char *str, int token);
-void			ft_lexeradd_back(t_lexer **lst, t_lexer *new);
-void			ft_lexerdelone(t_lexer **lst, int i);
-void			ft_lexerclear(t_lexer **lst);
+// lexer_clear
+void				lexerclear(t_lexer **lex);
+void				lexer_delone(t_lexer **lex, int key);
 
-//
-int				token_reader(t_tools *tools);
-int				add_node(char *str, t_tokens token, t_lexer **lexer_list);
-t_tokens		check_token(int c);
-int				handle_token(char *str, int i, t_lexer **lexer_list);
+// cmds_utils
+void	            cmdclear(t_cmds **cmd);
+t_cmds	            *cmdsnew(char **str, int num_redi, t_lexer *redi);
+void	            cmdsadd_back(t_cmds **lst, t_cmds *new);
+t_cmds	            *cmdsfirst(t_cmds *map);
+
+// lexer_utils
+t_lexer	            *lexernew(char *str, int token);
+void	            lexeradd_back(t_lexer **lst, t_lexer *new);
 
 #endif

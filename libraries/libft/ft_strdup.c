@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
-/*                                                        ::::::::            */
-/*   ft_strdup.c                                        :+:    :+:            */
-/*                                                     +:+                    */
-/*   By: mgraaf <mgraaf@student.codam.nl>             +#+                     */
-/*                                                   +#+                      */
-/*   Created: 2021/12/16 14:24:00 by mgraaf        #+#    #+#                 */
-/*   Updated: 2021/12/16 14:24:02 by mgraaf        ########   odam.nl         */
+/*                                                        :::      ::::::::   */
+/*   ft_strdup.c                                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: jeolim <jeolim@student.42.fr>              +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/07/06 16:57:26 by jeolim            #+#    #+#             */
+/*   Updated: 2022/07/08 14:08:37 by jeolim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,20 +14,20 @@
 
 char	*ft_strdup(const char *s1)
 {
-	char	*s2;
-	size_t	size;
-	size_t	i;
+	int		idx;
+	int		len;
+	char	*result;
 
-	i = 0;
-	size = ft_strlen(s1);
-	s2 = (char *)malloc((size * sizeof(char)) + 1);
-	if (!s2)
+	idx = 0;
+	len = ft_strlen(s1);
+	result = (char *)malloc(sizeof(char) * (len + 1));
+	if (!result)
 		return (0);
-	while (i < size)
+	while (s1[idx])
 	{
-		s2[i] = s1[i];
-		i++;
+		result[idx] = s1[idx];
+		idx++;
 	}
-	s2[i] = '\0';
-	return (s2);
+	result[idx] = '\0';
+	return (result);
 }

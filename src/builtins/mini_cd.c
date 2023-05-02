@@ -1,39 +1,42 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        ::::::::            */
-/*   mini_cd.c                                          :+:    :+:            */
-/*                                                     +:+                    */
-/*   By: mgraaf <mgraaf@student.codam.nl>             +#+                     */
-/*                                                   +#+                      */
-/*   Created: 2022/02/15 15:17:04 by mgraaf        #+#    #+#                 */
-/*   Updated: 2022/04/19 15:10:44 by maiadegraaf   ########   odam.nl         */
-/*                                                                            */
-/* ************************************************************************** */
-
 // #include "minishell.h"
 #include "builtins.h"
 
-char	*find_path_ret(char *str, t_tools *tools)
-{
-	int	i;
+int		mini_cd(t_data *data, t_cmds *cmd);
+int		specific_path(t_data *data, char *str);
+void	add_path_to_env(t_data *data);
+char	*find_path_res(char *str, t_data *data);
 
-	i = 0;
-	while (tools->envp[i])
+int	mini_cd(t_data *data, t_cmds *cmd)
+{
+	int		ret;
+
+	if (!cmd->str[1])
+		ret = specific_path(data, "HOME=");
+	else if (ft_strncmp(cmd->str[1], "-", 1) == 0)
+		ret = specific_path(data, "OLDPWD=");
+	else
 	{
-		if (!ft_strncmp(tools->envp[i], str, ft_strlen(str)))
-			return (ft_substr(tools->envp[i], ft_strlen(str),
-					ft_strlen(tools->envp[i]) - ft_strlen(str)));
-		i++;
+		ret = chdir(cmd->str[1]);
+		if (ret != 0)
+		{
+			ft_putstr_fd("minishell: ", STDERR_FILENO);
+			ft_putstr_fd(cmd->str[1], STDERR_FILENO);
+			perror(" ");
+		}
 	}
-	return (NULL);
+	if (ret != 0)
+		return (1);
+	change_path(data);
+	add_path_to_env(data);
+	return (0);
 }
 
-int	specific_path(t_tools *tools, char *str)
+int	specific_path(t_data *data, char *str)
 {
 	char	*tmp;
 	int		ret;
 
-	tmp = find_path_ret(str, tools);
+	tmp = find_path_res(str, data);
 	ret = chdir(tmp);
 	free(tmp);
 	if (ret != 0)
@@ -46,51 +49,43 @@ int	specific_path(t_tools *tools, char *str)
 	return (ret);
 }
 
-void	add_path_to_env(t_tools *tools)
+char	*find_path_res(char *str, t_data *data)
+{
+	int	i;
+
+	i = 0;
+	while (data->env[i])
+	{
+		if (!ft_strncmp(data->env[i], str, ft_strlen(str)))
+			return (ft_substr(data->env[i], ft_strlen(str),
+					ft_strlen(data->env[i]) - ft_strlen(str)));
+		i++;
+	}
+	return (NULL);
+}
+
+void	add_path_to_env(t_data *data)
 {
 	int		i;
 	char	*tmp;
 
 	i = 0;
-	while (tools->envp[i])
+	while (data->env[i])
 	{
-		if (!ft_strncmp(tools->envp[i], "PWD=", 4))
+		if (!ft_strncmp(data->env[i], "PWD=", 4))
 		{
-			tmp = ft_strjoin("PWD=", tools->pwd);
-			free(tools->envp[i]);
-			tools->envp[i] = tmp;
+			tmp = ft_strjoin("PWD=", data->pwd);
+			free(data->env[i]);
+			data->env[i] = tmp;
 		}
-		else if (!ft_strncmp(tools->envp[i], "OLDPWD=", 7) && tools->old_pwd)
+		else if (!ft_strncmp(data->env[i], "OLDPWD=", 7) && data->old_pwd)
 		{
-			tmp = ft_strjoin("OLDPWD=", tools->old_pwd);
-			free(tools->envp[i]);
-			tools->envp[i] = tmp;
+			tmp = ft_strjoin("OLDPWD=", data->old_pwd);
+			free(data->env[i]);
+			data->env[i] = tmp;
 		}
 		i++;
 	}
 }
 
-int	mini_cd(t_tools *tools, t_simple_cmds *simple_cmd)
-{
-	int		ret;
 
-	if (!simple_cmd->str[1])
-		ret = specific_path(tools, "HOME=");
-	else if (ft_strncmp(simple_cmd->str[1], "-", 1) == 0)
-		ret = specific_path(tools, "OLDPWD=");
-	else
-	{
-		ret = chdir(simple_cmd->str[1]);
-		if (ret != 0)
-		{
-			ft_putstr_fd("minishell: ", STDERR_FILENO);
-			ft_putstr_fd(simple_cmd->str[1], STDERR_FILENO);
-			perror(" ");
-		}
-	}
-	if (ret != 0)
-		return (EXIT_FAILURE);
-	change_path(tools);
-	add_path_to_env(tools);
-	return (EXIT_SUCCESS);
-}

@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
-/*                                                        ::::::::            */
-/*   ft_lstlast.c                                       :+:    :+:            */
-/*                                                     +:+                    */
-/*   By: mgraaf <mgraaf@student.codam.nl>             +#+                     */
-/*                                                   +#+                      */
-/*   Created: 2021/12/16 14:22:27 by mgraaf        #+#    #+#                 */
-/*   Updated: 2021/12/16 14:22:29 by mgraaf        ########   odam.nl         */
+/*                                                        :::      ::::::::   */
+/*   ft_lstlast.c                                       :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: jeolim <jeolim@student.42seoul.kr>         +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/07/08 13:48:16 by jeolim            #+#    #+#             */
+/*   Updated: 2022/07/08 13:49:17 by jeolim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,15 +14,11 @@
 
 t_list	*ft_lstlast(t_list *lst)
 {
-	int	i;
-
-	i = 0;
 	if (!lst)
-		return (NULL);
-	while (lst->next != NULL)
+		return (0);
+	while (lst->next)
 	{
 		lst = lst->next;
-		i++;
 	}
 	return (lst);
 }

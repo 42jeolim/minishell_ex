@@ -1,26 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
-/*                                                        ::::::::            */
-/*   ft_striteri.c                                      :+:    :+:            */
-/*                                                     +:+                    */
-/*   By: mgraaf <mgraaf@student.codam.nl>             +#+                     */
-/*                                                   +#+                      */
-/*   Created: 2021/12/16 14:24:06 by mgraaf        #+#    #+#                 */
-/*   Updated: 2021/12/16 14:24:09 by mgraaf        ########   odam.nl         */
+/*                                                        :::      ::::::::   */
+/*   ft_striteri.c                                      :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: jeolim <jeolim@student.42seoul.kr>         +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/07/08 14:09:09 by jeolim            #+#    #+#             */
+/*   Updated: 2022/07/08 14:10:36 by jeolim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "libft.h"
+
 void	ft_striteri(char *s, void (*f)(unsigned int, char*))
 {
-	int		i;
+	int	idx;
 
-	i = 0;
-	if ((!s || !f) || (!s && !f))
+	idx = 0;
+	if (!s)
 		return ;
-	while (s[i])
+	while (s[idx])
 	{
-		f(i, &s[i]);
-		i++;
+		(*f)(idx, &s[idx]);
+		idx++;
 	}
-	s[i] = '\0';
 }

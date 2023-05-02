@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
-/*                                                        ::::::::            */
-/*   ft_calloc.c                                        :+:    :+:            */
-/*                                                     +:+                    */
-/*   By: mgraaf <mgraaf@student.codam.nl>             +#+                     */
-/*                                                   +#+                      */
-/*   Created: 2021/12/16 14:18:54 by mgraaf        #+#    #+#                 */
-/*   Updated: 2021/12/16 14:21:22 by mgraaf        ########   odam.nl         */
+/*                                                        :::      ::::::::   */
+/*   ft_calloc.c                                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: jeolim <jeolim@student.42.fr>              +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/07/06 16:55:24 by jeolim            #+#    #+#             */
+/*   Updated: 2023/01/23 10:52:35 by jeolim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,11 +14,14 @@
 
 void	*ft_calloc(size_t count, size_t size)
 {
-	int		*ret;
+	void	*ptr;
 
-	ret = malloc(count * size);
-	if (!ret)
-		return (0);
-	ft_bzero(ret, count * size);
-	return (ret);
+	ptr = malloc(size * count);
+	if (!ptr)
+		return (NULL);
+	if (!count)
+		return (NULL);
+	if ((count >= SIZE_MAX || size >= SIZE_MAX || size >= SIZE_MAX / count))
+		return (NULL);
+	return (ft_memset(ptr, 0, (size * count)));
 }
