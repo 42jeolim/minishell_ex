@@ -1,4 +1,22 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   heredoc.c                                          :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: jeolim <jeolim@student.42.fr>              +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/05/03 18:31:54 by jeolim            #+#    #+#             */
+/*   Updated: 2023/05/03 18:32:26 by jeolim           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../../includes/executor.h"
+
+int	create_heredoc(t_lexer *heredoc, int quotes,
+	t_data *data, char *file_name);
+int	ft_heredoc(t_data *data, t_lexer *heredoc, char *file_name);
+char	*generate_heredoc_filename(void);
+int	send_heredoc(t_data *data, t_cmds *cmd);
 
 int	create_heredoc(t_lexer *heredoc, int quotes,
 	t_data *data, char *file_name)

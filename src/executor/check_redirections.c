@@ -1,4 +1,22 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   check_redirections.c                               :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: jeolim <jeolim@student.42.fr>              +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/05/03 18:35:53 by jeolim            #+#    #+#             */
+/*   Updated: 2023/05/03 18:36:32 by jeolim           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "executor.h"
+
+int	check_append_outfile(t_lexer *redi);
+int	handle_infile(char *file);
+int	check_redirections(t_cmds *cmd);
+int	handle_outfile(t_lexer *redi);
+int	check_redirections(t_cmds *cmd);
 
 int	check_append_outfile(t_lexer *redi)
 {

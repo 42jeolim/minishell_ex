@@ -1,4 +1,19 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   executor_utils.c                                   :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: jeolim <jeolim@student.42.fr>              +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/05/03 18:34:53 by jeolim            #+#    #+#             */
+/*   Updated: 2023/05/03 18:34:54 by jeolim           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "executor.h"
+
+char	*join_split_str(char **split_str, char *new_str);
+char	**resplit_str(char **double_arr);
 
 char	*join_split_str(char **split_str, char *new_str)
 {
