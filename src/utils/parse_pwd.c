@@ -44,19 +44,10 @@ void	parse_env(t_data *data)
 
 char	**find_path(char **env)
 {
-	// int	i;
 	char *tmp;
 
-	// i = 0;
 	while (ft_strncmp("PATH", *env, 4))
 		env++;
 	tmp = *env + 5;
 	return (ft_split(tmp, ':'));
-	// while (env[i])
-	// {
-	// 	if (!ft_strncmp(env[i], "PATH=", 5))
-	// 		return (ft_substr(env[i], 5, ft_strlen(env[i]) - 5));
-	// 	i++;
-	// }
-	// return (ft_strdup("\0"));
 }
