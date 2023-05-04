@@ -6,7 +6,7 @@
 /*   By: jeolim <jeolim@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/03 18:26:34 by jeolim            #+#    #+#             */
-/*   Updated: 2023/05/03 18:26:36 by jeolim           ###   ########.fr       */
+/*   Updated: 2023/05/05 01:00:33 by jeolim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,25 +18,6 @@ int	read_words(int i, char *str, t_lexer **lex);
 int	is_spaces(char *str, int i);
 int	is_whitespace(char c);
 int	add_node(char *str, t_tokens token, t_lexer **lex);
-
-int	read_words(int i, char *str, t_lexer **lex)
-{
-	int	j;
-
-	j = 0;
-	while (str[i + j] && !(check_token(str[i + j])))
-	{
-		j += handle_quotes(i + j, str, 34);
-		j += handle_quotes(i + j, str, 39);
-		if (is_whitespace(str[i + j]))
-			break ;
-		else
-			j++;
-	}
-	if (!add_node(ft_substr(str, i, j), 0, lex))
-		return (-1);
-	return (j);
-}
 
 int	tokenizer(t_data *data)
 {
@@ -57,6 +38,25 @@ int	tokenizer(t_data *data)
 		i += j;
 	}
 	return (1);
+}
+
+int	read_words(int i, char *str, t_lexer **lex)
+{
+	int	j;
+
+	j = 0;
+	while (str[i + j] && !(check_token(str[i + j])))
+	{
+		j += handle_quotes(i + j, str, 34);
+		j += handle_quotes(i + j, str, 39);
+		if (is_whitespace(str[i + j]))
+			break ;
+		else
+			j++;
+	}
+	if (!add_node(ft_substr(str, i, j), 0, lex))
+		return (-1);
+	return (j);
 }
 
 int	is_spaces(char *str, int i)

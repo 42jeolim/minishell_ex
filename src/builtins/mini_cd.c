@@ -6,7 +6,7 @@
 /*   By: jeolim <jeolim@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/03 18:38:07 by jeolim            #+#    #+#             */
-/*   Updated: 2023/05/03 18:38:08 by jeolim           ###   ########.fr       */
+/*   Updated: 2023/05/05 00:35:40 by jeolim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,24 +20,23 @@ char	*find_path_res(char *str, t_data *data);
 
 int	mini_cd(t_data *data, t_cmds *cmd)
 {
-	int		ret;
+	int		res;
 
 	if (!cmd->str[1])
-		ret = specific_path(data, "HOME=");
+		res = specific_path(data, "HOME=");
 	else if (ft_strncmp(cmd->str[1], "-", 1) == 0)
-		ret = specific_path(data, "OLDPWD=");
+		res = specific_path(data, "OLDPWD=");
 	else
 	{
-		ret = chdir(cmd->str[1]);
-		if (ret != 0)
+		res = chdir(cmd->str[1]);
+		if (res != 0)
 		{
 			ft_putstr_fd("minishell: ", STDERR_FILENO);
 			ft_putstr_fd(cmd->str[1], STDERR_FILENO);
 			perror(" ");
+			return (1);
 		}
 	}
-	if (ret != 0)
-		return (1);
 	change_path(data);
 	add_path_to_env(data);
 	return (0);
@@ -46,19 +45,19 @@ int	mini_cd(t_data *data, t_cmds *cmd)
 int	specific_path(t_data *data, char *str)
 {
 	char	*tmp;
-	int		ret;
+	int		res;
 
 	tmp = find_path_res(str, data);
-	ret = chdir(tmp);
+	res = chdir(tmp);
 	free(tmp);
-	if (ret != 0)
+	if (res != 0)
 	{
 		str = ft_substr(str, 0, ft_strlen(str) - 1);
 		ft_putstr_fd(str, STDERR_FILENO);
 		free(str);
 		ft_putendl_fd(" not set", STDERR_FILENO);
 	}
-	return (ret);
+	return (res);
 }
 
 char	*find_path_res(char *str, t_data *data)

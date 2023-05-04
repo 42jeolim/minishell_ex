@@ -6,13 +6,13 @@
 /*   By: jeolim <jeolim@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/03 18:32:59 by jeolim            #+#    #+#             */
-/*   Updated: 2023/05/03 18:35:00 by jeolim           ###   ########.fr       */
+/*   Updated: 2023/05/05 01:07:20 by jeolim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "executor.h"
 
-int	find_cmd(t_cmds *cmd, t_data *data);
+int		find_cmd(t_cmds *cmd, t_data *data);
 void	handle_cmd(t_cmds *cmd, t_data *data);
 void	dup_cmd(t_cmds *cmd, t_data *data, int end[2], int fd_in);
 void	single_cmd(t_cmds *cmd, t_data *data);

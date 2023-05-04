@@ -6,17 +6,17 @@
 /*   By: jeolim <jeolim@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/03 18:25:47 by jeolim            #+#    #+#             */
-/*   Updated: 2023/05/03 18:25:49 by jeolim           ###   ########.fr       */
+/*   Updated: 2023/05/04 23:24:01 by jeolim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "utils.h"
 
-int		find_pwd(t_data *data);
+void	find_pwd(t_data *data);
 void	parse_env(t_data *data);
 char	**find_path(char **env);
 
-int	find_pwd(t_data *data)
+void	find_pwd(t_data *data)
 {
 	int	i;
 
@@ -31,7 +31,6 @@ int	find_pwd(t_data *data)
 					7, ft_strlen(data->env[i]) - 7);
 		i++;
 	}
-	return (1);
 }
 
 void	parse_env(t_data *data)
@@ -57,7 +56,6 @@ void	parse_env(t_data *data)
 char	**find_path(char **env)
 {
 	char *tmp;
-
 	while (ft_strncmp("PATH", *env, 4))
 		env++;
 	tmp = *env + 5;

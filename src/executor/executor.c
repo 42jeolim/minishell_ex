@@ -6,17 +6,17 @@
 /*   By: jeolim <jeolim@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/03 18:35:05 by jeolim            #+#    #+#             */
-/*   Updated: 2023/05/03 18:35:47 by jeolim           ###   ########.fr       */
+/*   Updated: 2023/05/05 01:14:40 by jeolim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "executor.h"
 
 t_cmds	*call_expander(t_data *data, t_cmds *cmd);
-int	pipe_wait(int *pid, int amount);
-int	ft_fork(t_data *data, int end[2], int fd_in, t_cmds *cmd);
-int	check_fd_heredoc(t_data *data, int end[2], t_cmds *cmd);
-int	executor(t_data *data);
+int		pipe_wait(int *pid, int amount);
+int		ft_fork(t_data *data, int end[2], int fd_in, t_cmds *cmd);
+int		check_fd_heredoc(t_data *data, int end[2], t_cmds *cmd);
+int		executor(t_data *data);
 
 t_cmds	*call_expander(t_data *data, t_cmds *cmd)
 {

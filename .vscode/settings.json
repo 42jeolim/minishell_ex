@@ -19,6 +19,7 @@
     "history.h": "c",
     "parser.h": "c",
     "expander.h": "c",
-    "executor.h": "c"
+    "executor.h": "c",
+    "__config": "c"
   }
 }

@@ -6,7 +6,7 @@
 /*   By: jeolim <jeolim@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/03 18:30:22 by jeolim            #+#    #+#             */
-/*   Updated: 2023/05/03 18:31:27 by jeolim           ###   ########.fr       */
+/*   Updated: 2023/05/05 01:02:21 by jeolim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,25 +30,18 @@
 # include "expander.h"
 
 # define READLINE_MSG	"\033[1;35mminishell\033[34m$ \033[0m"
-# define HEREDOC_MSG	"\033[1;34m> \033[0m"
+# define HEREDOC_MSG	"\033[1;34mheredoc> \033[0m"
 # define False			0
 # define True			1
-
-void	init_stri(int i, int j, t_data *data);
-
-void	free_things(char *tmp2, t_data *data, int i);
-void	print_parser(t_cmds cmd);
-char	*delete_quotes_value(char *str);
-char	*delete_quotes_export(char *str, char c);
 
 typedef struct s_mini
 {
 	int	error_num;
 	int	stop_heredoc;
-	int	in_cmd;
+	int	cmd;
 	int	in_heredoc;
 }	t_mini;
 
-t_mini				g_mini; //global 변수 사용 이유 설명
+t_mini				g_mini;
 
 #endif

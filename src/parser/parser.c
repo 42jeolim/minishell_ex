@@ -6,7 +6,7 @@
 /*   By: jeolim <jeolim@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/03 18:26:18 by jeolim            #+#    #+#             */
-/*   Updated: 2023/05/03 18:26:19 by jeolim           ###   ########.fr       */
+/*   Updated: 2023/05/05 00:27:21 by jeolim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,6 @@ int	parser(t_data *data)
 			return (1);
 		parser = init_parser_data(data->lexer_list, data);
 		node = init_cmd(&parser);
-		
 		if (!node)
 			parser_error(0, data, parser.lexer_list);
 		if (!data->cmd)

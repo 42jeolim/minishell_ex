@@ -6,7 +6,7 @@
 /*   By: jeolim <jeolim@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/03 18:37:14 by jeolim            #+#    #+#             */
-/*   Updated: 2023/05/03 18:37:15 by jeolim           ###   ########.fr       */
+/*   Updated: 2023/05/04 23:29:58 by jeolim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,18 +15,18 @@
 # include "minishell.h"
 
 // parse_pwd
-int					find_pwd(t_data *data);
+void				find_pwd(t_data *data);
 void				parse_env(t_data *data);
 
 // utils
 char			    **ft_arrdup(char **arr);
 void			    free_arr(char **arr);
-int				    count_quotes(char *line);
+int				    check_quotes(char *line);
 
 // minishell_loop
-int					minishell_init(t_data *data);
+void				minishell_init(t_data *data);
 void				print_minishell(void);
-int					minishell_loop(t_data *data);
+int 				minishell_loop(t_data *data);
 int					data_reset(t_data *data);
 
 // signal

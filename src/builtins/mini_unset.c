@@ -6,7 +6,7 @@
 /*   By: jeolim <jeolim@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/03 18:37:49 by jeolim            #+#    #+#             */
-/*   Updated: 2023/05/03 18:37:50 by jeolim           ###   ########.fr       */
+/*   Updated: 2023/05/05 00:48:44 by jeolim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,7 @@ char	**del_var(char **arr, char *str)
 	size_t	i;
 
 	i = 0;
-	while (arr[i] != NULL)
+	while (arr[i])
 		i++;
 	res = ft_calloc(sizeof(char *), i + 1);
 	if (!res)
@@ -84,14 +84,14 @@ char	**del_var_loop(char **arr, char **res, char *str)
 
 	i = 0;
 	j = 0;
-	while (arr[i]) //arr[i] != NULL
+	while (arr[i])
 	{
 		if (!(ft_strncmp(arr[i], str, equal_sign(arr[i]) - 1) == 0
 				&& str[equal_sign(arr[i])] == '\0'
 				&& arr[i][ft_strlen(str)] == '='))
 		{
 			res[j] = ft_strdup(arr[i]);
-			if (res[j] == NULL)
+			if (!res[j])
 			{
 				free_arr(res);
 				return (res);

@@ -6,7 +6,7 @@
 /*   By: jeolim <jeolim@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/03 18:37:29 by jeolim            #+#    #+#             */
-/*   Updated: 2023/05/03 18:37:30 by jeolim           ###   ########.fr       */
+/*   Updated: 2023/05/04 23:46:45 by jeolim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,16 +21,16 @@ int	ft_error(int error, t_data *data)
 		ft_putstr_fd("syntax error near unexpected token 'newline'\n",
 			STDERR_FILENO);
 	else if (error == 1)
-		ft_putstr_fd("memory error: unable to assign memory\n", STDERR_FILENO);
+		ft_putstr_fd("Memory Assign Error\n", STDERR_FILENO);
 	else if (error == 2)
-		ft_putstr_fd("syntax error: unable to locate closing quotation\n",
+		ft_putstr_fd("Unmatching quotation\n",
 			STDERR_FILENO);
 	else if (error == 3)
-		ft_putstr_fd("Parser problem\n", STDERR_FILENO);
+		ft_putstr_fd("Parser Error\n", STDERR_FILENO);
 	else if (error == 4)
-		ft_putstr_fd("Failed to create pipe\n", STDERR_FILENO);
+		ft_putstr_fd("Pipe Error\n", STDERR_FILENO);
 	else if (error == 5)
-		ft_putstr_fd("Failed to fork\n", STDERR_FILENO);
+		ft_putstr_fd("Fork Error\n", STDERR_FILENO);
 	else if (error == 6)
 		ft_putstr_fd("outfile: Error\n", STDERR_FILENO);
 	else if (error == 7)

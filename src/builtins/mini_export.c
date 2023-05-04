@@ -6,7 +6,7 @@
 /*   By: jeolim <jeolim@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/03 18:38:18 by jeolim            #+#    #+#             */
-/*   Updated: 2023/05/03 18:38:18 by jeolim           ###   ########.fr       */
+/*   Updated: 2023/05/05 00:43:30 by jeolim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,8 @@ int	mini_export(t_data *data, t_cmds *cmd)
 				if (cmd->str[i])
 				{
 					tmp = add_var(data->env, cmd->str[i]);
+					if (!tmp)
+						return (ft_error(1, data));
 					free_arr(data->env);
 					data->env = tmp;
 				}
@@ -99,7 +101,7 @@ char	**add_var(char **arr, char *str)
 		delete_quotes(str, '\"');
 	if (str[equal_sign(str)] == '\'')
 		delete_quotes(str, '\'');
-	while (arr[i] != NULL)
+	while (arr[i])
 		i++;
 	res = ft_calloc(sizeof(char *), i + 2);
 	if (!res)
@@ -114,16 +116,16 @@ char	**add_var_loop(char **arr, char **res, char *str)
 	int	i;
 
 	i = 0;
-	while (arr[i] != NULL)
+	while (arr[i])
 	{
-		if (arr[i + 1] == NULL)
+		if (!arr[i + 1])
 		{
 			res[i] = ft_strdup(str);
 			res[i + 1] = ft_strdup(arr[i]);
 		}
 		else
 			res[i] = ft_strdup(arr[i]);
-		if (res[i] == NULL)
+		if (!res[i])
 		{
 			free_arr(res);
 			return (res);

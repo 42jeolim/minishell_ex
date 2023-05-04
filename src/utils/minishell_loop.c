@@ -6,14 +6,14 @@
 /*   By: jeolim <jeolim@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/03 18:25:51 by jeolim            #+#    #+#             */
-/*   Updated: 2023/05/03 18:25:54 by jeolim           ###   ########.fr       */
+/*   Updated: 2023/05/05 01:11:05 by jeolim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "utils.h"
 
 int		minishell_loop(t_data *data);
-int		minishell_init(t_data *data);
+void	minishell_init(t_data *data);
 void	print_minishell(void);
 int		data_reset(t_data *data);
 int		executor_init(t_data *data);
@@ -26,25 +26,25 @@ int	minishell_loop(t_data *data)
 	tmp = ft_strtrim(data->args, " ");
 	free(data->args);
 	data->args = tmp;
-	if (!data->args)
+	if (!data->args) 
 	{
 		ft_putendl_fd("exit", STDOUT_FILENO);
 		exit(0);
 	}
 	if (data->args[0] == '\0')
 		return (data_reset(data));
-	add_history(data->args); // 명령어 기록 남기기
-	if (!count_quotes(data->args)) //quote counting
+	add_history(data->args);
+	if (!check_quotes(data->args))
 		return (ft_error(2, data));
 	if (!tokenizer(data))
 		return (ft_error(1, data));
 	parser(data);
 	executor_init(data);
-	data_reset(data); // loop
+	data_reset(data);
 	return (1);
 }
 
-int	minishell_init(t_data *data)
+void	minishell_init(t_data *data)
 {
 	data->cmd = NULL;
 	data->lexer_list = NULL;
@@ -52,11 +52,10 @@ int	minishell_init(t_data *data)
 	data->heredoc = False;
 	data->reset = False;
 	g_mini.stop_heredoc = 0;
-	g_mini.in_cmd = 0;
+	g_mini.cmd = 0;
 	g_mini.in_heredoc = 0;
-	parse_env(data); //환경변수 처리
+	parse_env(data);
 	init_signal();
-	return (1);
 }
 
 int	data_reset(t_data *data)
@@ -72,27 +71,10 @@ int	data_reset(t_data *data)
 	return (1);
 }
 
-int	prepare_executor(t_data *data)
-{
-	signal(SIGQUIT, sigquit_handler);
-	g_mini.in_cmd = 1;
-	if (data->pipes == 0)
-		single_cmd(data->cmd, data);
-	else
-	{
-		data->pid = ft_calloc(sizeof(int), data->pipes + 2);
-		if (!data->pid)
-			return (ft_error(1, data));
-		executor(data);
-	}
-	g_mini.in_cmd = 0;
-	return (0);
-}
-
 int	executor_init(t_data *data)
 {
 	signal(SIGQUIT, sigquit_handler);
-	g_mini.in_cmd = 1;
+	g_mini.cmd = 1;
 	if (data->pipes == 0)
 		single_cmd(data->cmd, data);
 	else
@@ -102,7 +84,7 @@ int	executor_init(t_data *data)
 			return (ft_error(1, data));
 		executor(data);
 	}
-	g_mini.in_cmd = 0;
+	g_mini.cmd = 0;
 	return (0);
 }
 

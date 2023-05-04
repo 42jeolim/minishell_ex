@@ -6,7 +6,7 @@
 /*   By: jeolim <jeolim@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/03 18:26:27 by jeolim            #+#    #+#             */
-/*   Updated: 2023/05/03 18:26:28 by jeolim           ###   ########.fr       */
+/*   Updated: 2023/05/05 00:27:55 by jeolim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ void	rm_redirections(t_parser *parser)
 	t_lexer	*tmp;
 
 	tmp = parser->lexer_list;
-	while (tmp && !tmp->token) //tmp->token == 0
+	while (tmp && !tmp->token)
 		tmp = tmp->next;
 	if (!tmp || tmp->token == PIPE)
 		return ;
