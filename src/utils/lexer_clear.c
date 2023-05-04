@@ -6,11 +6,11 @@
 /*   By: jeolim <jeolim@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/03 18:26:03 by jeolim            #+#    #+#             */
-/*   Updated: 2023/05/03 18:26:04 by jeolim           ###   ########.fr       */
+/*   Updated: 2023/05/05 01:59:18 by jeolim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "utils.h"
+#include "minishell.h"
 
 void	lexerclear(t_lexer **lex);
 void	lexer_delone(t_lexer **lst, int key);

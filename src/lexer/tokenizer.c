@@ -6,12 +6,11 @@
 /*   By: jeolim <jeolim@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/03 18:26:34 by jeolim            #+#    #+#             */
-/*   Updated: 2023/05/05 01:00:33 by jeolim           ###   ########.fr       */
+/*   Updated: 2023/05/05 01:59:49 by jeolim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-
-#include "lexer.h"
+#include "minishell.h"
 
 int	tokenizer(t_data *data);
 int	read_words(int i, char *str, t_lexer **lex);

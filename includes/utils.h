@@ -6,13 +6,14 @@
 /*   By: jeolim <jeolim@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/03 18:37:14 by jeolim            #+#    #+#             */
-/*   Updated: 2023/05/04 23:29:58 by jeolim           ###   ########.fr       */
+/*   Updated: 2023/05/05 01:58:09 by jeolim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef UTILS_H
 # define UTILS_H
 # include "minishell.h"
+# include "parser.h"
 
 // parse_pwd
 void				find_pwd(t_data *data);

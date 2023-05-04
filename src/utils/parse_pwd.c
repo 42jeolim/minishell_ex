@@ -6,11 +6,11 @@
 /*   By: jeolim <jeolim@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/03 18:25:47 by jeolim            #+#    #+#             */
-/*   Updated: 2023/05/04 23:24:01 by jeolim           ###   ########.fr       */
+/*   Updated: 2023/05/05 01:59:07 by jeolim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "utils.h"
+#include "minishell.h"
 
 void	find_pwd(t_data *data);
 void	parse_env(t_data *data);

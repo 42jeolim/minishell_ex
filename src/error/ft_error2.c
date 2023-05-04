@@ -6,11 +6,11 @@
 /*   By: jeolim <jeolim@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/03 18:37:29 by jeolim            #+#    #+#             */
-/*   Updated: 2023/05/04 23:46:45 by jeolim           ###   ########.fr       */
+/*   Updated: 2023/05/05 02:00:58 by jeolim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "error.h"
+#include "minishell.h"
 
 int	ft_error(int error, t_data *data);
 

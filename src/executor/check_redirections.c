@@ -6,11 +6,11 @@
 /*   By: jeolim <jeolim@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/03 18:35:53 by jeolim            #+#    #+#             */
-/*   Updated: 2023/05/03 18:36:32 by jeolim           ###   ########.fr       */
+/*   Updated: 2023/05/05 02:00:53 by jeolim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "executor.h"
+#include "minishell.h"
 
 int	check_append_outfile(t_lexer *redi);
 int	handle_infile(char *file);

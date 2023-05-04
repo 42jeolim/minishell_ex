@@ -6,11 +6,11 @@
 /*   By: jeolim <jeolim@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/03 18:31:54 by jeolim            #+#    #+#             */
-/*   Updated: 2023/05/05 01:52:28 by jeolim           ###   ########.fr       */
+/*   Updated: 2023/05/05 02:00:31 by jeolim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "executor.h"
+#include "minishell.h"
 
 int		create_heredoc(t_lexer *heredoc, int quotes,
 	t_data *data, char *file_name);

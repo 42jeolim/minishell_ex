@@ -6,11 +6,11 @@
 /*   By: jeolim <jeolim@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/03 18:38:02 by jeolim            #+#    #+#             */
-/*   Updated: 2023/05/05 01:42:33 by jeolim           ###   ########.fr       */
+/*   Updated: 2023/05/05 02:01:27 by jeolim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "builtins.h"
+#include "minishell.h"
 
 void	change_path(t_data *data);
 size_t	equal_sign(char *str);

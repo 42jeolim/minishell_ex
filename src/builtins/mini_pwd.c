@@ -6,11 +6,11 @@
 /*   By: jeolim <jeolim@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/03 18:38:20 by jeolim            #+#    #+#             */
-/*   Updated: 2023/05/03 18:38:21 by jeolim           ###   ########.fr       */
+/*   Updated: 2023/05/05 02:01:06 by jeolim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "builtins.h"
+#include "minishell.h"
 
 int	mini_pwd(t_data *data, t_cmds *cmd);
 

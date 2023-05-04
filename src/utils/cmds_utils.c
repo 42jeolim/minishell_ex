@@ -6,11 +6,11 @@
 /*   By: jeolim <jeolim@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/03 18:26:06 by jeolim            #+#    #+#             */
-/*   Updated: 2023/05/03 18:26:06 by jeolim           ###   ########.fr       */
+/*   Updated: 2023/05/05 01:59:21 by jeolim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "utils.h"
+#include "minishell.h"
 
 void	cmdclear(t_cmds **cmd);
 t_cmds	*cmdsnew(char **str, int num_redi, t_lexer *redi);

@@ -6,11 +6,11 @@
 /*   By: jeolim <jeolim@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/03 18:26:42 by jeolim            #+#    #+#             */
-/*   Updated: 2023/05/05 01:54:16 by jeolim           ###   ########.fr       */
+/*   Updated: 2023/05/05 02:00:02 by jeolim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "lexer.h"
+#include "minishell.h"
 
 t_tokens	check_token(int c);
 int			handle_token(char *str, int i, t_lexer **lex);

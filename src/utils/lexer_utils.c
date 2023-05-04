@@ -6,11 +6,11 @@
 /*   By: jeolim <jeolim@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/03 18:25:57 by jeolim            #+#    #+#             */
-/*   Updated: 2023/05/03 18:25:58 by jeolim           ###   ########.fr       */
+/*   Updated: 2023/05/05 01:59:15 by jeolim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "utils.h"
+#include "minishell.h"
 
 t_lexer	*lexernew(char *str, int token);
 void	lexeradd_back(t_lexer **lst, t_lexer *new);

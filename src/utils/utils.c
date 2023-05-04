@@ -6,11 +6,11 @@
 /*   By: jeolim <jeolim@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/03 18:25:32 by jeolim            #+#    #+#             */
-/*   Updated: 2023/05/04 23:38:59 by jeolim           ###   ########.fr       */
+/*   Updated: 2023/05/05 01:58:56 by jeolim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "utils.h"
+#include "minishell.h"
 
 char	**ft_arrdup(char **arr);
 void	free_arr(char **arr);

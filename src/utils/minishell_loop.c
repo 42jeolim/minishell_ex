@@ -6,11 +6,11 @@
 /*   By: jeolim <jeolim@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/03 18:25:51 by jeolim            #+#    #+#             */
-/*   Updated: 2023/05/05 01:11:05 by jeolim           ###   ########.fr       */
+/*   Updated: 2023/05/05 01:59:10 by jeolim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "utils.h"
+#include "minishell.h"
 
 int		minishell_loop(t_data *data);
 void	minishell_init(t_data *data);

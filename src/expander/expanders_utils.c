@@ -6,11 +6,11 @@
 /*   By: jeolim <jeolim@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/03 18:29:18 by jeolim            #+#    #+#             */
-/*   Updated: 2023/05/05 01:53:11 by jeolim           ###   ########.fr       */
+/*   Updated: 2023/05/05 02:00:14 by jeolim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "expander.h"
+#include "minishell.h"
 
 size_t	dollar_sign(char *str);
 char	*char_to_str(char c);

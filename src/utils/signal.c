@@ -6,11 +6,11 @@
 /*   By: jeolim <jeolim@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/03 18:25:38 by jeolim            #+#    #+#             */
-/*   Updated: 2023/05/05 01:09:46 by jeolim           ###   ########.fr       */
+/*   Updated: 2023/05/05 01:59:02 by jeolim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "utils.h"
+#include "minishell.h"
 
 void	init_signal(void);
 int		event(void);
