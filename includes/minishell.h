@@ -6,7 +6,7 @@
 /*   By: jeolim <jeolim@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/03 18:30:22 by jeolim            #+#    #+#             */
-/*   Updated: 2023/05/05 01:50:39 by jeolim           ###   ########.fr       */
+/*   Updated: 2023/05/05 02:24:12 by jeolim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,6 @@
 # include "libft.h"
 # include <stdio.h>
 # include <stdlib.h>
-# include <string.h>
 # include <fcntl.h>
 # include <unistd.h>
 # include <readline/readline.h>
