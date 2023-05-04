@@ -6,7 +6,7 @@
 /*   By: jeolim <jeolim@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/03 18:30:22 by jeolim            #+#    #+#             */
-/*   Updated: 2023/05/05 01:02:21 by jeolim           ###   ########.fr       */
+/*   Updated: 2023/05/05 01:50:39 by jeolim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@
 # include <unistd.h>
 # include <readline/readline.h>
 # include <readline/history.h>
+# include <signal.h>
 # include "parser.h"
 # include "utils.h"
 # include "error.h"
@@ -34,7 +35,7 @@
 # define False			0
 # define True			1
 
-typedef struct s_mini
+typedef struct	s_mini
 {
 	int	error_num;
 	int	stop_heredoc;
@@ -42,6 +43,6 @@ typedef struct s_mini
 	int	in_heredoc;
 }	t_mini;
 
-t_mini				g_mini;
+t_mini			g_mini;
 
 #endif

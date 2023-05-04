@@ -6,12 +6,11 @@
 /*   By: jeolim <jeolim@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/03 18:37:49 by jeolim            #+#    #+#             */
-/*   Updated: 2023/05/05 00:48:44 by jeolim           ###   ########.fr       */
+/*   Updated: 2023/05/05 01:51:33 by jeolim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "builtins.h"
-
 
 int		mini_unset(t_data *data, t_cmds *cmd);
 int		unset_error(t_cmds *cmd);

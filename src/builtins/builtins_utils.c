@@ -6,7 +6,7 @@
 /*   By: jeolim <jeolim@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/03 18:38:02 by jeolim            #+#    #+#             */
-/*   Updated: 2023/05/05 00:38:45 by jeolim           ###   ########.fr       */
+/*   Updated: 2023/05/05 01:42:33 by jeolim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 void	change_path(t_data *data);
 size_t	equal_sign(char *str);
 char	*delete_quotes_value(char *str);
-int	check_valid_identifier(char c);
+int		check_valid_identifier(char c);
 
 void	change_path(t_data *data)
 {

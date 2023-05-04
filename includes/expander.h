@@ -6,7 +6,7 @@
 /*   By: jeolim <jeolim@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/03 18:27:12 by jeolim            #+#    #+#             */
-/*   Updated: 2023/05/03 18:31:26 by jeolim           ###   ########.fr       */
+/*   Updated: 2023/05/05 01:31:32 by jeolim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,9 +21,9 @@ char	*expander_str(t_data *data, char *str);
 //expander_utils1
 size_t	dollar_sign(char *str);
 char	*char_to_str(char c);
-int	after_dol_lenght(char *str, int j);
+int	    after_dol_lenght(char *str, int j);
 char	*delete_quotes(char *str, char c);
 
 //expander_utils2
-int	question_mark(char **tmp);
+int	    uestion_mark(char **tmp);
 #endif

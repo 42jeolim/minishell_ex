@@ -6,11 +6,11 @@
 /*   By: jeolim <jeolim@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/03 18:26:18 by jeolim            #+#    #+#             */
-/*   Updated: 2023/05/05 00:27:21 by jeolim           ###   ########.fr       */
+/*   Updated: 2023/05/05 01:54:57 by jeolim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "parser.h"
 
 int		parser(t_data *data);
 int		pipe_error(t_data *data, t_tokens token);

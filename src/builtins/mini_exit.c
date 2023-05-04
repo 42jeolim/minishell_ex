@@ -6,12 +6,11 @@
 /*   By: jeolim <jeolim@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/03 18:38:14 by jeolim            #+#    #+#             */
-/*   Updated: 2023/05/03 18:38:15 by jeolim           ###   ########.fr       */
+/*   Updated: 2023/05/05 01:50:43 by jeolim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "builtins.h"
-#include <signal.h>
 
 int		mini_exit(t_data *data, t_cmds *cmd);
 void	free_data(t_data *data);

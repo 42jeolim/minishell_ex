@@ -6,7 +6,7 @@
 /*   By: jeolim <jeolim@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/03 18:37:11 by jeolim            #+#    #+#             */
-/*   Updated: 2023/05/05 00:21:31 by jeolim           ###   ########.fr       */
+/*   Updated: 2023/05/05 01:33:51 by jeolim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,11 +25,11 @@ typedef enum s_tokens
 
 typedef struct s_lexer
 {
-	char			*str;
-	t_tokens		token;
-	int				i;
-	struct s_lexer	*next;
-	struct s_lexer	*prev;
+	char					*str;
+	t_tokens				token;
+	int						i;
+	struct s_lexer			*next;
+	struct s_lexer			*prev;
 }	t_lexer;
 
 typedef struct s_data
@@ -60,27 +60,26 @@ typedef struct s_cmds
 
 typedef struct s_parser
 {
-	t_lexer			*lexer_list;
-	t_lexer			*redi;
-	int				num_redi;
-	struct s_data	*data;
+	t_lexer				*lexer_list;
+	t_lexer				*redi;
+	int					num_redi;
+	struct s_data		*data;
 }	t_parser;
 
 // parser
-int				parser(t_data *data);
+int					parser(t_data *data);
 
 //parser_utils
-void			count_pipes(t_lexer *lex, t_data *data);
-t_parser		init_parser_data(t_lexer *lex, t_data *data);
-int				count_args(t_lexer *lex);
+void				count_pipes(t_lexer *lex, t_data *data);
+t_parser			init_parser_data(t_lexer *lex, t_data *data);
+int					count_args(t_lexer *lex);
 
-t_lexer			*find_next_cmd(t_lexer *lex);
+t_lexer				*find_next_cmd(t_lexer *lex);
 
 //handle_redirections
-void	rm_redirections(t_parser *parser);
+void				rm_redirections(t_parser *parser);
 
-int				add_new_redirection(t_lexer *tmp, t_parser *parser);
-int				handle_heredoc(t_parser *parser_tools, t_lexer *tmp);
+int					add_new_redirection(t_lexer *tmp, t_parser *parser);
 
 
 #endif

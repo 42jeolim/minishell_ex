@@ -6,11 +6,10 @@
 /*   By: jeolim <jeolim@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/03 18:38:07 by jeolim            #+#    #+#             */
-/*   Updated: 2023/05/05 00:35:40 by jeolim           ###   ########.fr       */
+/*   Updated: 2023/05/05 01:49:33 by jeolim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-// #include "minishell.h"
 #include "builtins.h"
 
 int		mini_cd(t_data *data, t_cmds *cmd);

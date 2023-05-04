@@ -6,11 +6,11 @@
 /*   By: jeolim <jeolim@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/03 18:26:24 by jeolim            #+#    #+#             */
-/*   Updated: 2023/05/03 18:26:25 by jeolim           ###   ########.fr       */
+/*   Updated: 2023/05/05 01:54:38 by jeolim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "parser.h"
 
 void		count_pipes(t_lexer *lex, t_data *data);
 t_parser	init_parser_data(t_lexer *lex, t_data *data);

@@ -6,16 +6,15 @@
 /*   By: jeolim <jeolim@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/03 18:30:29 by jeolim            #+#    #+#             */
-/*   Updated: 2023/05/03 18:31:15 by jeolim           ###   ########.fr       */
+/*   Updated: 2023/05/05 01:52:53 by jeolim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
-#include "builtins.h"
+#include "expander.h"
 
-int	loop_if_dollar_sign(t_data *data, char *str, char **tmp, int j);
-int	handle_digit_after_dollar(int j, char *str);
-int	handle_digit_after_dollar(int j, char *str);
+int		loop_if_dollar_sign(t_data *data, char *str, char **tmp, int j);
+int		handle_digit_after_dollar(int j, char *str);
+int		handle_digit_after_dollar(int j, char *str);
 char	**expander(t_data *data, char **str);
 char	*expander_str(t_data *data, char *str);
 
