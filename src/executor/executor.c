@@ -6,17 +6,44 @@
 /*   By: jeolim <jeolim@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/03 18:35:05 by jeolim            #+#    #+#             */
-/*   Updated: 2023/05/05 11:47:08 by jeolim           ###   ########.fr       */
+/*   Updated: 2023/05/05 14:17:44 by jeolim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
+int		executor(t_data *data);
 t_cmds	*call_expander(t_data *data, t_cmds *cmd);
 int		pipe_wait(int *pid, int amount);
-int		ft_fork(t_data *data, int end[2], int fd_in, t_cmds *cmd);
 int		check_fd_heredoc(t_data *data, int end[2], t_cmds *cmd);
-int		executor(t_data *data);
+int		ft_fork(t_data *data, int end[2], int fd_in, t_cmds *cmd);
+
+int	executor(t_data *data)
+{
+	int		end[2];
+	int		fd_in;
+
+	fd_in = STDIN_FILENO;
+	while (data->cmd)
+	{
+		data->cmd = call_expander(data, data->cmd);
+		if (data->cmd->next)
+			pipe(end);
+		send_heredoc(data, data->cmd);
+		ft_fork(data, end, fd_in, data->cmd);
+		close(end[1]);
+		if (data->cmd->prev)
+			close(fd_in);
+		fd_in = check_fd_heredoc(data, end, data->cmd);
+		if (data->cmd->next)
+			data->cmd = data->cmd->next;
+		else
+			break ;
+	}
+	pipe_wait(data->pid, data->pipes);
+	data->cmd = cmdsfirst(data->cmd);
+	return (0);
+}
 
 t_cmds	*call_expander(t_data *data, t_cmds *cmd)
 {
@@ -33,23 +60,6 @@ t_cmds	*call_expander(t_data *data, t_cmds *cmd)
 	}
 	cmd->redi = start;
 	return (cmd);
-}
-
-int	pipe_wait(int *pid, int amount)
-{
-	int	i;
-	int	status;
-
-	i = 0;
-	while (i < amount)
-	{
-		waitpid(pid[i], &status, 0);
-		i++;
-	}
-	waitpid(pid[i], &status, 0);
-	if (WIFEXITED(status))
-		g_mini.error_num = WEXITSTATUS(status);
-	return (0);
 }
 
 int	ft_fork(t_data *data, int end[2], int fd_in, t_cmds *cmd)
@@ -84,29 +94,19 @@ int	check_fd_heredoc(t_data *data, int end[2], t_cmds *cmd)
 	return (fd_in);
 }
 
-int	executor(t_data *data)
+int	pipe_wait(int *pid, int amount)
 {
-	int		end[2];
-	int		fd_in;
+	int	i;
+	int	status;
 
-	fd_in = STDIN_FILENO;
-	while (data->cmd)
+	i = 0;
+	while (i < amount)
 	{
-		data->cmd = call_expander(data, data->cmd);
-		if (data->cmd->next)
-			pipe(end);
-		send_heredoc(data, data->cmd);
-		ft_fork(data, end, fd_in, data->cmd);
-		close(end[1]);
-		if (data->cmd->prev)
-			close(fd_in);
-		fd_in = check_fd_heredoc(data, end, data->cmd);
-		if (data->cmd->next)
-			data->cmd = data->cmd->next;
-		else
-			break ;
+		waitpid(pid[i], &status, 0);
+		i++;
 	}
-	pipe_wait(data->pid, data->pipes);
-	data->cmd = cmdsfirst(data->cmd);
+	waitpid(pid[i], &status, 0);
+	if (WIFEXITED(status))
+		g_mini.error_num = WEXITSTATUS(status);
 	return (0);
 }

@@ -6,7 +6,7 @@
 /*   By: jeolim <jeolim@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/03 18:26:27 by jeolim            #+#    #+#             */
-/*   Updated: 2023/05/05 11:38:42 by jeolim           ###   ########.fr       */
+/*   Updated: 2023/05/05 14:23:06 by jeolim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,20 +33,6 @@ void	rm_redirections(t_parser *parser)
 			&& tmp->token <= DLESS))
 		add_new_redirection(tmp, parser);
 	rm_redirections(parser);
-}
-
-char	*join_heredoc(char *str1, char *str2)
-{
-	char	*ret;
-	char	*tmp;
-
-	if (!str2)
-		return (ft_strdup(str1));
-	tmp = ft_strjoin(str1, " ");
-	ret = ft_strjoin(tmp, str2);
-	free(tmp);
-	free(str2);
-	return (ret);
 }
 
 int	add_new_redirection(t_lexer *tmp, t_parser *parser)

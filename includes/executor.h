@@ -6,7 +6,7 @@
 /*   By: jeolim <jeolim@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/03 18:32:37 by jeolim            #+#    #+#             */
-/*   Updated: 2023/05/05 01:31:24 by jeolim           ###   ########.fr       */
+/*   Updated: 2023/05/05 14:08:34 by jeolim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,8 +20,8 @@ t_cmds			*call_expander(t_data *data, t_cmds *cmd);
 int				pipe_wait(int *pid, int amount);
 
 // executor_utils
-char			*join_split_str(char **split_str, char *new_str);
 char			**resplit_str(char **double_arr);
+char			*join_split_str(char **split_str, char *new_str);
 
 // handle_cmd
 int				find_cmd(t_cmds *cmd, t_data *data);

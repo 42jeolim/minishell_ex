@@ -6,29 +6,44 @@
 /*   By: jeolim <jeolim@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/03 18:35:53 by jeolim            #+#    #+#             */
-/*   Updated: 2023/05/05 02:00:53 by jeolim           ###   ########.fr       */
+/*   Updated: 2023/05/05 14:07:56 by jeolim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	check_append_outfile(t_lexer *redi);
+int	check_redirections(t_cmds *cmd);
 int	handle_infile(char *file);
-int	check_redirections(t_cmds *cmd);
 int	handle_outfile(t_lexer *redi);
-int	check_redirections(t_cmds *cmd);
+int	check_append_outfile(t_lexer *redi);
 
-int	check_append_outfile(t_lexer *redi)
+int	check_redirections(t_cmds *cmd)
 {
-	int	fd;
+	t_lexer	*start;
 
-	if (redi->token == DGREAT)
-		fd = open(redi->str,
-				O_CREAT | O_RDWR | O_APPEND, 0644);
-	else
-		fd = open(redi->str,
-				O_CREAT | O_RDWR | O_TRUNC, 0644);
-	return (fd);
+	start = cmd->redi;
+	while (cmd->redi)
+	{
+		if (cmd->redi->token == LESS)
+		{
+			if (handle_infile(cmd->redi->str))
+				return (1);
+		}
+		else if (cmd->redi->token == GREAT
+			|| cmd->redi->token == DGREAT)
+		{
+			if (handle_outfile(cmd->redi))
+				return (1);
+		}
+		else if (cmd->redi->token == DLESS)
+		{
+			if (handle_infile(cmd->file_name))
+				return (1);
+		}
+		cmd->redi = cmd->redi->next;
+	}
+	cmd->redi = start;
+	return (0);
 }
 
 int	handle_infile(char *file)
@@ -72,31 +87,15 @@ int	handle_outfile(t_lexer *redi)
 	return (0);
 }
 
-int	check_redirections(t_cmds *cmd)
+int	check_append_outfile(t_lexer *redi)
 {
-	t_lexer	*start;
+	int	fd;
 
-	start = cmd->redi;
-	while (cmd->redi)
-	{
-		if (cmd->redi->token == LESS)
-		{
-			if (handle_infile(cmd->redi->str))
-				return (1);
-		}
-		else if (cmd->redi->token == GREAT
-			|| cmd->redi->token == DGREAT)
-		{
-			if (handle_outfile(cmd->redi))
-				return (1);
-		}
-		else if (cmd->redi->token == DLESS)
-		{
-			if (handle_infile(cmd->file_name))
-				return (1);
-		}
-		cmd->redi = cmd->redi->next;
-	}
-	cmd->redi = start;
-	return (0);
+	if (redi->token == DGREAT)
+		fd = open(redi->str,
+				O_CREAT | O_RDWR | O_APPEND, 0644);
+	else
+		fd = open(redi->str,
+				O_CREAT | O_RDWR | O_TRUNC, 0644);
+	return (fd);
 }

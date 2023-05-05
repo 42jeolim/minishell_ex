@@ -6,7 +6,7 @@
 /*   By: jeolim <jeolim@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/03 18:25:47 by jeolim            #+#    #+#             */
-/*   Updated: 2023/05/05 11:43:43 by jeolim           ###   ########.fr       */
+/*   Updated: 2023/05/05 15:03:37 by jeolim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 void	find_pwd(t_data *data);
 void	parse_env(t_data *data);
-char	**find_path(char **env);
+char	*find_path(char **env);
 
 void	find_pwd(t_data *data)
 {
@@ -36,9 +36,12 @@ void	find_pwd(t_data *data)
 void	parse_env(t_data *data)
 {
 	char	*tmp;
+	char	*path_from_env;
 	int		i;
 
-	data->paths = find_path(data->env);
+	path_from_env = find_path(data->env);
+    data->paths = ft_split(path_from_env, ':');
+    free(path_from_env);
 	i = 0;
 	while (data->paths[i])
 	{
@@ -53,12 +56,16 @@ void	parse_env(t_data *data)
 	}
 }
 
-char	**find_path(char **env)
+char	*find_path(char **env)
 {
-	char	*tmp;
+	int	i;
 
-	while (ft_strncmp("PATH", *env, 4))
-		env++;
-	tmp = *env + 5;
-	return (ft_split(tmp, ':'));
+	i = 0;
+	while (env[i])
+    {
+        if (!ft_strncmp(env[i], "PATH=", 5))
+            return (ft_substr(env[i], 5, ft_strlen(env[i]) - 5));
+        i++;
+    }
+    return (ft_strdup("\0"));
 }

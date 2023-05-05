@@ -6,7 +6,7 @@
 /*   By: jeolim <jeolim@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/03 18:37:49 by jeolim            #+#    #+#             */
-/*   Updated: 2023/05/05 11:32:48 by jeolim           ###   ########.fr       */
+/*   Updated: 2023/05/05 12:26:54 by jeolim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,6 @@ int	unset_error(t_cmds *cmd)
 	i = 0;
 	if (!cmd->str[1])
 	{
-		ft_putendl_fd("minishell: unset: not enough arguments", STDERR_FILENO);
 		return (1);
 	}
 	while (cmd->str[1][i])

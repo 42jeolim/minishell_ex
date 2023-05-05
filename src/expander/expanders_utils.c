@@ -6,31 +6,17 @@
 /*   By: jeolim <jeolim@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/03 18:29:18 by jeolim            #+#    #+#             */
-/*   Updated: 2023/05/05 02:00:14 by jeolim           ###   ########.fr       */
+/*   Updated: 2023/05/05 14:16:12 by jeolim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-size_t	dollar_sign(char *str);
 char	*char_to_str(char c);
 int		after_dol_lenght(char *str, int j);
-size_t	quotes_lenght(char *str);
 char	*delete_quotes(char *str, char c);
-
-size_t	dollar_sign(char *str)
-{
-	size_t	i;
-
-	i = 0;
-	while (str[i])
-	{
-		if (str[i] == '$')
-			return (i + 1);
-		i++;
-	}
-	return (0);
-}
+size_t	quotes_lenght(char *str);
+size_t	dollar_sign(char *str);
 
 char	*char_to_str(char c)
 {
@@ -53,24 +39,6 @@ int	after_dol_lenght(char *str, int j)
 	return (i);
 }
 
-size_t	quotes_lenght(char *str)
-{
-	int		i;
-	size_t	ret;
-
-	i = 0;
-	ret = 0;
-	while (str[i])
-	{
-		if (str[i] == '\'' || str[i] == '\"')
-		{
-			ret++;
-		}
-		i++;
-	}
-	return (ret);
-}
-
 char	*delete_quotes(char *str, char c)
 {
 	int	i;
@@ -90,4 +58,36 @@ char	*delete_quotes(char *str, char c)
 		i++;
 	}
 	return (str);
+}
+
+size_t	quotes_lenght(char *str)
+{
+	int		i;
+	size_t	ret;
+
+	i = 0;
+	ret = 0;
+	while (str[i])
+	{
+		if (str[i] == '\'' || str[i] == '\"')
+		{
+			ret++;
+		}
+		i++;
+	}
+	return (ret);
+}
+
+size_t	dollar_sign(char *str)
+{
+	size_t	i;
+
+	i = 0;
+	while (str[i])
+	{
+		if (str[i] == '$')
+			return (i + 1);
+		i++;
+	}
+	return (0);
 }
