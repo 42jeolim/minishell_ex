@@ -6,7 +6,7 @@
 /*   By: jeolim <jeolim@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/03 18:38:10 by jeolim            #+#    #+#             */
-/*   Updated: 2023/05/05 02:01:18 by jeolim           ###   ########.fr       */
+/*   Updated: 2023/05/05 11:47:22 by jeolim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ int	mini_echo(t_data *data, t_cmds *cmd)
 	int		n_option;
 
 	i = 1;
-	n_option = False;
+	n_option = FALSE;
 	(void) data;
 	while (cmd->str[i] && cmd->str[i][0] == '-'
 		&& cmd->str[i][1] == 'n')
@@ -31,13 +31,13 @@ int	mini_echo(t_data *data, t_cmds *cmd)
 		while (cmd->str[i][j] == 'n')
 			j++;
 		if (cmd->str[i][j] == '\0')
-			n_option = True;
+			n_option = TRUE;
 		else
 			break ;
 		i++;
 	}
 	print_lines(i, cmd->str, STDOUT_FILENO);
-	if (n_option == False)
+	if (n_option == FALSE)
 		ft_putchar_fd('\n', STDOUT_FILENO);
 	return (0);
 }

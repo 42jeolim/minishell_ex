@@ -6,7 +6,7 @@
 /*   By: jeolim <jeolim@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/03 18:25:38 by jeolim            #+#    #+#             */
-/*   Updated: 2023/05/05 01:59:02 by jeolim           ###   ########.fr       */
+/*   Updated: 2023/05/05 11:44:10 by jeolim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ void	sigquit_handler(int sig);
 
 void	init_signal(void)
 {
-	rl_event_hook = event; 
+	rl_event_hook = event;
 	signal(SIGINT, sigint_handler);
 	signal(SIGQUIT, SIG_IGN);
 }

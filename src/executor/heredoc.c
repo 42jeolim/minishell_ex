@@ -6,14 +6,14 @@
 /*   By: jeolim <jeolim@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/03 18:31:54 by jeolim            #+#    #+#             */
-/*   Updated: 2023/05/05 02:00:31 by jeolim           ###   ########.fr       */
+/*   Updated: 2023/05/05 11:46:56 by jeolim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int		create_heredoc(t_lexer *heredoc, int quotes,
-	t_data *data, char *file_name);
+int		create_heredoc(t_lexer *heredoc, int quotes, \
+		t_data *data, char *file_name);
 int		ft_heredoc(t_data *data, t_lexer *heredoc, char *file_name);
 char	*generate_heredoc_filename(void);
 int		send_heredoc(t_data *data, t_cmds *cmd);
@@ -26,10 +26,10 @@ int	create_heredoc(t_lexer *heredoc, int quotes,
 
 	fd = open(file_name, O_CREAT | O_RDWR | O_TRUNC, 0644);
 	line = readline(HEREDOC_MSG);
-	
-	while (line && !g_mini.stop_heredoc && ft_strncmp(heredoc->str, line, ft_strlen(heredoc->str) + 1))
+	while (line && !g_mini.stop_heredoc \
+			&&ft_strncmp(heredoc->str, line, ft_strlen(heredoc->str) + 1))
 	{
-		if (quotes == False)
+		if (quotes == FALSE)
 			line = expander_str(data, line);
 		write(fd, line, ft_strlen(line));
 		write(fd, "\n", 1);
@@ -53,16 +53,16 @@ int	ft_heredoc(t_data *data, t_lexer *heredoc, char *file_name)
 			&& heredoc->str[ft_strlen(heredoc->str) - 1] == '\"')
 		|| (heredoc->str[0] == '\''
 			&& heredoc->str[ft_strlen(heredoc->str) - 1] == '\''))
-		quotes = True;
+		quotes = TRUE;
 	else
-		quotes = False;
+		quotes = FALSE;
 	delete_quotes(heredoc->str, '\"');
 	delete_quotes(heredoc->str, '\'');
 	g_mini.stop_heredoc = 0;
 	g_mini.in_heredoc = 1;
 	sl = create_heredoc(heredoc, quotes, data, file_name);
 	g_mini.in_heredoc = 0;
-	data->heredoc = True;
+	data->heredoc = TRUE;
 	return (sl);
 }
 

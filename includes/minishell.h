@@ -6,7 +6,7 @@
 /*   By: jeolim <jeolim@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/03 18:30:22 by jeolim            #+#    #+#             */
-/*   Updated: 2023/05/05 02:24:12 by jeolim           ###   ########.fr       */
+/*   Updated: 2023/05/05 11:27:11 by jeolim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,10 +31,10 @@
 
 # define READLINE_MSG	"\033[1;35mminishell\033[34m$ \033[0m"
 # define HEREDOC_MSG	"\033[1;34mheredoc> \033[0m"
-# define False			0
-# define True			1
+# define FALSE			0
+# define TRUE			1
 
-typedef struct	s_mini
+typedef struct s_mini
 {
 	int	error_num;
 	int	stop_heredoc;

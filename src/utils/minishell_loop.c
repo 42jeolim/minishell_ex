@@ -6,7 +6,7 @@
 /*   By: jeolim <jeolim@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/03 18:25:51 by jeolim            #+#    #+#             */
-/*   Updated: 2023/05/05 02:15:49 by jeolim           ###   ########.fr       */
+/*   Updated: 2023/05/05 11:46:41 by jeolim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ int	minishell_loop(t_data *data)
 	tmp = ft_strtrim(data->args, " ");
 	free(data->args);
 	data->args = tmp;
-	if (!data->args) 
+	if (!data->args)
 	{
 		ft_putendl_fd("exit", STDOUT_FILENO);
 		exit(0);
@@ -49,8 +49,8 @@ void	minishell_init(t_data *data)
 	data->cmd = NULL;
 	data->lexer_list = NULL;
 	data->pid = NULL;
-	data->heredoc = False;
-	data->reset = False;
+	data->heredoc = FALSE;
+	data->reset = FALSE;
 	g_mini.stop_heredoc = 0;
 	g_mini.cmd = 0;
 	g_mini.in_heredoc = 0;
@@ -66,7 +66,7 @@ int	data_reset(t_data *data)
 		free(data->pid);
 	free_arr(data->paths);
 	minishell_init(data);
-	data->reset = True;
+	data->reset = TRUE;
 	minishell_loop(data);
 	return (1);
 }

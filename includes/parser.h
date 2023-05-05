@@ -6,7 +6,7 @@
 /*   By: jeolim <jeolim@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/03 18:37:11 by jeolim            #+#    #+#             */
-/*   Updated: 2023/05/05 01:33:51 by jeolim           ###   ########.fr       */
+/*   Updated: 2023/05/05 11:25:42 by jeolim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,6 +80,5 @@ t_lexer				*find_next_cmd(t_lexer *lex);
 void				rm_redirections(t_parser *parser);
 
 int					add_new_redirection(t_lexer *tmp, t_parser *parser);
-
 
 #endif

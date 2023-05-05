@@ -6,7 +6,7 @@
 /*   By: jeolim <jeolim@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/03 18:25:47 by jeolim            #+#    #+#             */
-/*   Updated: 2023/05/05 01:59:07 by jeolim           ###   ########.fr       */
+/*   Updated: 2023/05/05 11:43:43 by jeolim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,8 @@ void	parse_env(t_data *data)
 
 char	**find_path(char **env)
 {
-	char *tmp;
+	char	*tmp;
+
 	while (ft_strncmp("PATH", *env, 4))
 		env++;
 	tmp = *env + 5;

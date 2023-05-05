@@ -6,7 +6,7 @@
 /*   By: jeolim <jeolim@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/03 18:37:26 by jeolim            #+#    #+#             */
-/*   Updated: 2023/05/05 02:01:01 by jeolim           ###   ########.fr       */
+/*   Updated: 2023/05/05 11:39:40 by jeolim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,6 @@ void	parser_error(int error, t_data *data, t_lexer *lex);
 int		export_error(char *c);
 int		cmd_not_found(char *str);
 void	lexer_error(int error, t_data *data);
-
 
 int	token_error(t_data *data, t_lexer *lex,
 	t_tokens token)

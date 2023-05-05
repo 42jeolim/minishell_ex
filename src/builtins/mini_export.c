@@ -6,7 +6,7 @@
 /*   By: jeolim <jeolim@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/03 18:38:18 by jeolim            #+#    #+#             */
-/*   Updated: 2023/05/05 02:01:08 by jeolim           ###   ########.fr       */
+/*   Updated: 2023/05/05 12:11:52 by jeolim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,8 +36,6 @@ int	mini_export(t_data *data, t_cmds *cmd)
 				if (cmd->str[i])
 				{
 					tmp = add_var(data->env, cmd->str[i]);
-					if (!tmp)
-						return (ft_error(1, data));
 					free_arr(data->env);
 					data->env = tmp;
 				}
@@ -134,4 +132,3 @@ char	**add_var_loop(char **arr, char **res, char *str)
 	}
 	return (res);
 }
-
